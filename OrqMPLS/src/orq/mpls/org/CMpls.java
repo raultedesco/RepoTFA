@@ -5,11 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultButtonModel;
+import javax.swing.UIManager;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,7 +17,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
 import javax.swing.JComboBox;
 
 @SuppressWarnings("serial")
@@ -289,13 +285,13 @@ public class CMpls extends JDialog {
 				
 				textIP1 = new JTextField();
 				textIP1.setText("None");
-				textIP1.setBounds(151, 245, 114, 19);
+				textIP1.setBounds(151, 245, 114, 21);
 				jp1.add(textIP1);
 				textIP1.setColumns(10);
 				
 				textMask1 = new JTextField();
 				textMask1.setText("None");
-				textMask1.setBounds(275, 245, 114, 19);
+				textMask1.setBounds(275, 245, 114, 21);
 				jp1.add(textMask1);
 				textMask1.setColumns(10);
 				
@@ -305,20 +301,20 @@ public class CMpls extends JDialog {
 				
 				textForwardingVRF1 = new JTextField();
 				textForwardingVRF1.setText("None");
-				textForwardingVRF1.setBounds(461, 245, 114, 19);
+				textForwardingVRF1.setBounds(461, 245, 114, 21);
 				jp1.add(textForwardingVRF1);
 				textForwardingVRF1.setColumns(10);
 						
 						textIP2 = new JTextField();
 						textIP2.setText("None");
 						textIP2.setColumns(10);
-						textIP2.setBounds(151, 280, 114, 19);
+						textIP2.setBounds(151, 280, 114, 21);
 						jp1.add(textIP2);
 						
 						textMask2 = new JTextField();
 						textMask2.setText("None");
 						textMask2.setColumns(10);
-						textMask2.setBounds(275, 280, 114, 19);
+						textMask2.setBounds(275, 280, 114, 21);
 						jp1.add(textMask2);
 						
 						checkboxMPLSIP2 = new JCheckBox("");
@@ -328,19 +324,19 @@ public class CMpls extends JDialog {
 						textForwardingVRF2 = new JTextField();
 						textForwardingVRF2.setText("None");
 						textForwardingVRF2.setColumns(10);
-						textForwardingVRF2.setBounds(461, 280, 114, 19);
+						textForwardingVRF2.setBounds(461, 280, 114, 21);
 						jp1.add(textForwardingVRF2);
 						
 						textIP3 = new JTextField();
 						textIP3.setText("None");
 						textIP3.setColumns(10);
-						textIP3.setBounds(151, 315, 114, 19);
+						textIP3.setBounds(151, 315, 114, 21);
 						jp1.add(textIP3);
 						
 						textMask3 = new JTextField();
 						textMask3.setText("None");
 						textMask3.setColumns(10);
-						textMask3.setBounds(275, 315, 114, 19);
+						textMask3.setBounds(275, 315, 114, 21);
 						jp1.add(textMask3);
 						
 						checkboxMPLSIP3 = new JCheckBox("");
@@ -350,19 +346,19 @@ public class CMpls extends JDialog {
 						textForwardingVRF3 = new JTextField();
 						textForwardingVRF3.setText("None");
 						textForwardingVRF3.setColumns(10);
-						textForwardingVRF3.setBounds(461, 315, 114, 19);
+						textForwardingVRF3.setBounds(461, 315, 114, 21);
 						jp1.add(textForwardingVRF3);
 						
 						textIP4 = new JTextField();
 						textIP4.setText("None");
 						textIP4.setColumns(10);
-						textIP4.setBounds(151, 346, 114, 19);
+						textIP4.setBounds(151, 346, 114, 21);
 						jp1.add(textIP4);
 						
 						textMask4 = new JTextField();
 						textMask4.setText("None");
 						textMask4.setColumns(10);
-						textMask4.setBounds(275, 346, 114, 19);
+						textMask4.setBounds(275, 346, 114, 21);
 						jp1.add(textMask4);
 						
 						checkboxMPLSIP4 = new JCheckBox("");
@@ -372,7 +368,7 @@ public class CMpls extends JDialog {
 						textForwardingVRF4 = new JTextField();
 						textForwardingVRF4.setText("None");
 						textForwardingVRF4.setColumns(10);
-						textForwardingVRF4.setBounds(461, 346, 114, 19);
+						textForwardingVRF4.setBounds(461, 346, 114, 21);
 						jp1.add(textForwardingVRF4);
 						
 						
@@ -644,7 +640,7 @@ public class CMpls extends JDialog {
 		
 			rutas[count]= new JTextField("ruta");
 			rutas[count].setVisible(true);
-			rutas[count].setBounds(10, y, 135, 20);
+			rutas[count].setBounds(10, y, 135, 21);
 			rutas[count].validate();
 
 		    jpgeneric.add(rutas[count]);
@@ -658,7 +654,7 @@ public class CMpls extends JDialog {
 	public String addroutemask(JPanel jpgeneric, int y, int count) {
 			mascara[count]  = new JTextField("mascara");
 			mascara[count].setVisible(true);
-			mascara[count].setBounds(151, y,135 , 20);
+			mascara[count].setBounds(151, y,135 , 21);
 		    jpgeneric.add(mascara[count]);
 		    return mascara[count].getText();
 	

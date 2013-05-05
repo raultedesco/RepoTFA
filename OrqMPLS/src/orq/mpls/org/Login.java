@@ -33,6 +33,15 @@ public class Login extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				try
+				{
+				   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				}
+				catch (Exception e)
+				{
+				   e.printStackTrace();
+				}
+				
 				try {
 					Login frame = new Login();
 					//inicia maximizado el frame login
