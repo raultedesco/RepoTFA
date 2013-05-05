@@ -121,7 +121,6 @@ public void setMplsipboolean(boolean mplsipboolean) {
 }
 
 public void listConfig() {
-	// TODO Auto-generated method stub
 	if (cefboolean == true) {
 		System.out.println("CEF: Activado");
 	} 

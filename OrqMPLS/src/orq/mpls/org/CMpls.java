@@ -80,6 +80,16 @@ public class CMpls extends JDialog {
 	private JCheckBox checkboxMPLSIP2;
 	private JCheckBox checkboxMPLSIP3;
 	private JCheckBox checkboxMPLSIP4;
+
+	private JComboBox comboBoxInterface1;
+
+	private JComboBox comboBoxInterface2;
+
+	private JComboBox comboBoxInterface3;
+
+	private JComboBox comboBoxInterface4;
+
+	private ArrayList<String> interfacesbysnmp;
 	
 	
 	
@@ -382,47 +392,48 @@ public class CMpls extends JDialog {
 		jp1.add(buttonAddRutas_Mask);
 		
 		
-		// para llenar el combobox
+		interfacesbysnmp = new ArrayList<>();
+				try {
+					interfacesbysnmp = con1.printInterface();
+					interfacesbysnmp.add("None");
+							} catch (IOException e2) {
+					
+					e2.printStackTrace();
+				}
 		
-		JComboBox comboBox = new JComboBox();
-		try {
-			comboBox.setModel(new DefaultComboBoxModel(con1.printInterface().toArray()));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		comboBox.setBounds(10, 246, 133, 19);
-		jp1.add(comboBox);
+		comboBoxInterface1 = new JComboBox();
+		comboBoxInterface1.setEnabled(true);
+		comboBoxInterface1.setToolTipText("Interfaces Equipo");
+		comboBoxInterface1.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+		comboBoxInterface1.setBounds(10, 246, 133, 19);
+		jp1.add(comboBoxInterface1);
 
-		JComboBox comboBox1 = new JComboBox();
-		try {
-			comboBox1.setModel(new DefaultComboBoxModel(con1.printInterface().toArray()));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		comboBox1.setBounds(10, 280, 133, 19);
-		jp1.add(comboBox1);
+		comboBoxInterface2 = new JComboBox();
+		comboBoxInterface2.setEnabled(true);
+		comboBoxInterface2.setToolTipText("Interfaces Equipo");
+		comboBoxInterface2.removeAllItems();
+		//comboBoxInterface2.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+		comboBoxInterface2.setBounds(10, 280, 133, 19);
+		jp1.add(comboBoxInterface2);
 		
-		JComboBox comboBox2 = new JComboBox();
-		try {
-			comboBox2.setModel(new DefaultComboBoxModel(con1.printInterface().toArray()));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		comboBox2.setBounds(10, 315, 133, 19);
-		jp1.add(comboBox2);
+		comboBoxInterface3 = new JComboBox();
+		comboBoxInterface3.setEnabled(true);
+		comboBoxInterface3.setToolTipText("Interfaces Equipo");
+		comboBoxInterface3.removeAllItems();
+		//comboBoxInterface3.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+		comboBoxInterface3.setBounds(10, 315, 133, 19);
+		jp1.add(comboBoxInterface3);
 		
-		JComboBox comboBox3 = new JComboBox();
-		try {
-			comboBox3.setModel(new DefaultComboBoxModel(con1.printInterface().toArray()));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		comboBox3.setBounds(10, 346, 133, 19);
-		jp1.add(comboBox3);
+		comboBoxInterface4 = new JComboBox();
+		comboBoxInterface4.setEnabled(true);
+		comboBoxInterface4.setToolTipText("Interfaces Equipo");
+		//comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+		comboBoxInterface4.setBounds(10, 346, 133, 19);
+		jp1.add(comboBoxInterface4);
+		
+		JButton btnNewButton = new JButton("Enviar ");
+		btnNewButton.setBounds(920, 629, 114, 23);
+		jp1.add(btnNewButton);
 		
 		buttonAddRutas_Mask.addActionListener(new ActionListener() {
 		
@@ -477,12 +488,14 @@ public class CMpls extends JDialog {
 				this.checkActiveCheckBGP();
 				this.checkActiveCheckEigrp();
 				this.checkActiveCheckMpls();
+				this.checkOverlapingInterface();
+				
 
 	}// final constructor CMPLS()
 		
 		
 		private void botonesCancel_Enviar(JPanel jpGeneric) {
-		JButton btnEnviar = new JButton("Enviar");
+		JButton btnEnviar = new JButton("Ver Config Generada");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //			ExecuteSelectedOptions();
@@ -555,10 +568,11 @@ public class CMpls extends JDialog {
 						boolean mpslip[] = new boolean[4];
 						String forwardingVRF[] = new String[4];
 						
-//						interfaces[0]=textInterfaces1.getText();
-//						interfaces[1]=textInterfaces2.getText();
-//						interfaces[2]=textInterfaces3.getText();
-//						interfaces[3]=textInterfaces4.getText();
+						interfaces[0]=comboBoxInterface1.getSelectedItem().toString();
+					    interfaces[1]=comboBoxInterface2.getSelectedItem().toString();
+					    interfaces[2]=comboBoxInterface3.getSelectedItem().toString();
+						interfaces[3]=comboBoxInterface4.getSelectedItem().toString();			
+						
 						c1.setInterfaces(interfaces);
 						
 						ips[0] = textIP1.getText();
@@ -587,8 +601,8 @@ public class CMpls extends JDialog {
 						
 						for (int j = 0; j < 4; j++) {
 							configResultView.append("Interface: " + c1.getInterfaces()[j] + 
-									"IP: " + c1.getIpsInterfaces()[j] + "Mascara: " + c1.getMasksInterfaces()[j] + 
-									"Forwarding VRF:" + c1.getForwardingVRF()[j] + "\n"
+									" |IP: " + c1.getIpsInterfaces()[j] + " |Mascara: " + c1.getMasksInterfaces()[j] + 
+									" |Forwarding VRF:" + c1.getForwardingVRF()[j] + "\n"
 									);
 						}
 						
@@ -597,19 +611,20 @@ public class CMpls extends JDialog {
 			
 			
 			
-		
 			
+			
+						
 			}
 		});
-		btnEnviar.setBounds(707, 629, 89, 23);
+		btnEnviar.setBounds(707, 629, 190, 23);
 		jpGeneric.add(btnEnviar);
 		
-		JButton btnNewButton_1 = new JButton("Cancel");
+		JButton btnNewButton_1 = new JButton("Cancelar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.setBounds(592, 629, 89, 23);
+		btnNewButton_1.setBounds(567, 629, 114, 23);
 		jpGeneric.add(btnNewButton_1);
 		}
 		
@@ -652,12 +667,12 @@ public class CMpls extends JDialog {
 	
 	
 	 protected void ExecuteSelectedOptions() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	protected void executeoptions() {
-		// TODO Auto-generated method stub
+	
 		 try {
 			 AutomatedTelnet telnet = new AutomatedTelnet("192.168.80.110",
 			 "raul",
@@ -679,15 +694,53 @@ public class CMpls extends JDialog {
 
 	
 	
-	
-	
+	public boolean  checkOverlapingInterface() {
+		ActionListener actionListener = new ActionListener() {
+			@Override
+			// TODO Reprogramar este metodo para que valide correctamente
+			public void actionPerformed(ActionEvent e) {// chequear la validacion
+				
+				
+				
+				
+				
+				if (comboBoxInterface1.getSelectedItem() == interfacesbysnmp.get(0)) {
+					interfacesbysnmp.remove(0);
+					comboBoxInterface2.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+					
+							}
+				if (comboBoxInterface2.getSelectedItem() == interfacesbysnmp.get(1-1)) {
+					interfacesbysnmp.remove(1);
+					comboBoxInterface3.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+					
+				}
+				if (comboBoxInterface3.getSelectedItem() == interfacesbysnmp.get(2-1)) {
+					interfacesbysnmp.remove(2);
+					comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+				}
+				if (comboBoxInterface4.getSelectedItem() == interfacesbysnmp.get(3-1)) {
+					//interfacesbysnmp.remove(3);
+					comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+				}
+			}
+				
+			};
+		
+		comboBoxInterface1.addActionListener(actionListener);
+		comboBoxInterface2.addActionListener(actionListener);
+		comboBoxInterface3.addActionListener(actionListener);
+		comboBoxInterface4.addActionListener(actionListener);
+		boolean resultado = true;
+		return resultado ;
+	}
+
 	
 	 public boolean  checkActiveCheckBGP() {
 		 ItemListener itemlistener = new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
+				
 				 if (checkboxActiveBGP.isSelected()) {
 					 textFieldProcesoBGP.setEditable(true);
 					 checkboxActiveEigrp.setEnabled(false);
@@ -712,7 +765,7 @@ public class CMpls extends JDialog {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
+				
 				 if (checkboxActiveEigrp.isSelected()) {
 					 textFieldProcesoEigrp.setEditable(true);
 					 checkboxActiveBGP.setEnabled(false);
@@ -737,7 +790,7 @@ public class CMpls extends JDialog {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
+				
 				 if (checkboxActiveCEF.isSelected()) {
 					 activeCEFFlag = true;
 					 ;
@@ -762,7 +815,7 @@ public class CMpls extends JDialog {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
+				
 				 if (checkboxActiveMpls.isSelected()) {
 					 activeVRF();
 					 activeMplsFlag = true;
@@ -798,7 +851,7 @@ public class CMpls extends JDialog {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
+				
 				 if (checkboxVrf.isSelected()) {
 					 activeVRF();
 					
@@ -818,7 +871,7 @@ public class CMpls extends JDialog {
 		
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			// TODO Auto-generated method stub
+			
 			if (checkboxCPE.isSelected()) {
 				//activar aqui las opciones de CPE
 				checkboxP.setEnabled(false);
@@ -850,7 +903,7 @@ public class CMpls extends JDialog {
 		
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			// TODO Auto-generated method stub
+	
 			if (checkboxPE.isSelected()) {
 				//activar aqui las opciones de CPE
 				checkboxCPE.setEnabled(false);
@@ -880,7 +933,7 @@ public class CMpls extends JDialog {
 		
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			// TODO Auto-generated method stub
+			
 			if (checkboxP.isSelected()) {
 				//activar aqui las opciones de CPE
 				checkboxCPE.setEnabled(false);
