@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import java.awt.Font;
+import java.awt.Color;
+import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -46,7 +48,7 @@ public class Login extends JFrame {
 				try {
 					Login frame = new Login();
 					//inicia maximizado el frame login
-					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					//establece que la operacion por defecto de la ventana
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					
@@ -67,6 +69,7 @@ public class Login extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
@@ -76,16 +79,19 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//nueva ventana jdialog
 				CMpls v1 = new CMpls();
+				v1.setVisible(true);
+				v1.parametrosconex(ip.getText(),puerto.getText(),comunitySnmp.getText(),usuario.getText(),password.getText());
 				//bloquea las demas ventanas, la setea como modal
 				v1.setModal(true);
-				v1.setVisible(true);
 				
-		
+				
+				
+				
 				
 				
 			}
 		});
-		btnNewButton.setBounds(269, 234, 167, 25);
+		btnNewButton.setBounds(12, 234, 167, 25);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblEquipo = new JLabel("Parametros de Conexion");
@@ -97,29 +103,27 @@ public class Login extends JFrame {
 		contentPane.add(lblIpEquipo);
 		
 		ip = new JTextField();
-		ip.setBounds(109, 59, 114, 19);
+		ip.setBounds(109, 59, 220, 21);
 		contentPane.add(ip);
 		ip.setColumns(10);
 		
 		JLabel lblPuerto = new JLabel("Puerto");
-		lblPuerto.setBounds(342, 115, 70, 15);
+		lblPuerto.setBounds(337, 61, 70, 15);
 		contentPane.add(lblPuerto);
 		
 		puerto = new JTextField();
 		puerto.setText("23");
-		puerto.setBounds(302, 59, 36, 19);
+		puerto.setBounds(400, 58, 36, 21);
 		contentPane.add(puerto);
 		puerto.setColumns(10);
 		
-		JTextArea lblcomunitySnmp = new JTextArea("Comunidad\nSnmp");
-		lblcomunitySnmp.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblcomunitySnmp.setBackground(UIManager.getColor("Button.background"));
+		JLabel lblcomunitySnmp = new JLabel("Comunidad\nSnmp");
 		lblcomunitySnmp.setToolTipText("");
-		lblcomunitySnmp.setBounds(12, 152, 86, 41);
+		lblcomunitySnmp.setBounds(12, 142, 146, 41);
 		contentPane.add(lblcomunitySnmp);
 		
 		comunitySnmp = new JTextField();
-		comunitySnmp.setBounds(109, 150, 114, 19);
+		comunitySnmp.setBounds(152, 152, 177, 21);
 		contentPane.add(comunitySnmp);
 		comunitySnmp.setColumns(10);
 		
@@ -128,19 +132,25 @@ public class Login extends JFrame {
 		contentPane.add(lbluser);
 		
 		usuario = new JTextField();
-		usuario.setBounds(109, 86, 114, 19);
+		usuario.setBounds(109, 86, 220, 21);
 		contentPane.add(usuario);
 		usuario.setColumns(10);
 		
 		JLabel lblpassword = new JLabel("Password");
+		lblpassword.setBackground(UIManager.getColor("Button.background"));
 		lblpassword.setBounds(12, 115, 70, 15);
 		contentPane.add(lblpassword);
 		
 		// campo para ingresar el password
 		password = new JPasswordField();
-		password.setBounds(109, 113, 114, 19);
+		password.setBounds(109, 113, 220, 21);
 		contentPane.add(password);
 		password.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("/home/raul/Imágenes/demo-console-of-fortigate-and-fortianalyzer-fortinet.gif"));
+		lblNewLabel.setBounds(223, 185, 213, 70);
+		contentPane.add(lblNewLabel);
 	}
 
 	public JTextField getIp() {
@@ -182,7 +192,4 @@ public class Login extends JFrame {
 	public void setPassword(JPasswordField password) {
 		this.password = password;
 	}
-
-
-
 }

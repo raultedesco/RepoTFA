@@ -1,5 +1,7 @@
 package orq.mpls.org;
 
+import java.util.ArrayList;
+
 
 
 public class CurrentConfig {
@@ -15,7 +17,7 @@ private boolean cefboolean;
 private boolean mplsipboolean;
 private String [] rutas= new String[5];
 private String [] mascaras= new String[5];
-private String [] interfaces = new String[4];
+private ArrayList<String> interfaces = new ArrayList<>();
 private String [] ipsInterfaces = new String[4];
 private String [] masksInterfaces = new String[4];
 private boolean [] checkMPLSIP = new boolean[4];
@@ -29,11 +31,11 @@ public String[] getForwardingVRF() {
 public void setForwardingVRF(String[] forwardingVRF) {
 	this.forwardingVRF = forwardingVRF;
 }
-public String[] getInterfaces() {
-	return interfaces;
+public String getInterfaces(int index) {
+	return interfaces.get(index);
 }
-public void setInterfaces(String[] interfaces) {
-	this.interfaces = interfaces;
+public void setInterfaces(ArrayList<String> interfacesbysnmp) {
+	this.interfaces = interfacesbysnmp;
 }
 public String[] getIpsInterfaces() {
 	return ipsInterfaces;

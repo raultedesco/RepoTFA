@@ -1,4 +1,4 @@
-package orq.mpls.org;
+	package orq.mpls.org;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +24,13 @@ public class CMpls extends JDialog {
 	/**
 	 * 
 	 */
+	
+	private String ip;
+	private String puerto;
+	private String comunity;
+	private String usuario;
+	private String password;
+	
 	private SNMPUtils con1 = new SNMPUtils();
 	
 	private JTextField textFieldProcesoBGP;
@@ -41,7 +48,7 @@ public class CMpls extends JDialog {
 	private JCheckBox checkboxActiveCEF;
 	private boolean activeCEFFlag;
 	private JCheckBox checkboxVrf;
-	private CurrentConfig c1 = null;
+	private CurrentConfig c1 = new CurrentConfig();
 	private JCheckBox checkboxActiveEigrp;
 	private boolean activeEigrpFlag;
 	private JTextField textFieldProcesoEigrp;
@@ -86,6 +93,8 @@ public class CMpls extends JDialog {
 	private JComboBox comboBoxInterface4;
 
 	private ArrayList<String> interfacesbysnmp;
+	private JTextField textField;
+	private JTextField textField_1;
 	
 	
 	
@@ -211,12 +220,14 @@ public class CMpls extends JDialog {
 				jp1.add(checkboxRT);
 				
 				textFieldRD = new JTextField();
+				textFieldRD.setToolTipText("Formato RD : ASN:nn");
 				textFieldRD.setBounds(202, 91, 80, 20);
 				textFieldRD.setEditable(false);
 				jp1.add(textFieldRD);
 				textFieldRD.setColumns(10);
 				
 				textFieldRT = new JTextField();
+				textFieldRT.setToolTipText("Formato RD : ASN:nn");
 				textFieldRT.setColumns(10);
 				textFieldRT.setBounds(355, 91, 80, 20);
 				textFieldRT.setEditable(false);
@@ -427,9 +438,39 @@ public class CMpls extends JDialog {
 		comboBoxInterface4.setBounds(10, 346, 133, 19);
 		jp1.add(comboBoxInterface4);
 		
+		
+		//enviar configuracion al dispositivo
 		JButton btnNewButton = new JButton("Enviar ");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setcurrentconfigvalues();
+				AutomatedTelnet send = new AutomatedTelnet("192.168.80.110", "raul", "cisco");
+				send.ena("cisco");
+				send.configmode();
+				send.cvrf(c1);
+				send.disconnect();
+			}
+		});
 		btnNewButton.setBounds(920, 629, 114, 23);
 		jp1.add(btnNewButton);
+		
+		JLabel lblAs = new JLabel("AS");
+		lblAs.setBounds(252, 144, 37, 17);
+		jp1.add(lblAs);
+		
+		textField = new JTextField();
+		textField.setBounds(295, 139, 65, 27);
+		jp1.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblVecinoBgp = new JLabel("Vecino BGP");
+		lblVecinoBgp.setBounds(382, 144, 89, 17);
+		jp1.add(lblVecinoBgp);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(479, 139, 140, 27);
+		jp1.add(textField_1);
+		textField_1.setColumns(10);
 		
 		buttonAddRutas_Mask.addActionListener(new ActionListener() {
 		
@@ -494,18 +535,47 @@ public class CMpls extends JDialog {
 		JButton btnEnviar = new JButton("Ver Config Generada");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//			ExecuteSelectedOptions();
-//			if (checkActiveDeviceCPE()) {
-//				System.out.println("El dispositivo es un CPE");
-//			}
-//			if (activePEFlag) {
-//				System.out.println("El dispositivo es un PE");
-//			}
-//			if (activePFlag) {
-//				System.out.println("El dispositivo es un P");
-//			}
-//			instanciando un obj c1 de tipo currentconfig y seteando su campo vrf
-			c1= new CurrentConfig();
+				setcurrentconfigvalues();
+						
+				
+			
+			
+			
+			
+			
+			
+						
+			}
+
+
+		});
+		btnEnviar.setBounds(707, 629, 190, 23);
+		jpGeneric.add(btnEnviar);
+		
+		JButton btnNewButton_1 = new JButton("Cancelar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setBounds(567, 629, 114, 23);
+		jpGeneric.add(btnNewButton_1);
+		}
+		
+		
+		
+		
+	
+
+	
+
+
+	
+	
+//fin botones canel_enviar
+	
+		public void setcurrentconfigvalues() {
+			
+			
 			
 			if (activeCEFFlag) {
 				c1.setCefboolean(true);
@@ -552,24 +622,20 @@ public class CMpls extends JDialog {
 						//guardar los valores en el objeto configuracion para su almacenado en BD y posterior confeccion de logs
 						c1.setRutas(temprutas);
 						c1.setMascaras(tempmascaras);
-						//configResultView.append("Ruta:" + rutas[i].getText() + " Mascara:" + mascara[i].getText()+"\n");
-						//configResultView.append(c1.getRutas()[i]);
 						configResultView.append("Ruta:" + c1.getRutas()[i] + " Mascara:" + c1.getMascaras()[i]+"\n");
 					}
 				
 					//Parte de Configuracion de las parte de mpls sobre las interfaces
-						String interfaces[] = new String[4];
 						String ips[] = new String[4];
 						String masks[] = new String[4];
 						boolean mpslip[] = new boolean[4];
 						String forwardingVRF[] = new String[4];
 						
-						interfaces[0]=comboBoxInterface1.getSelectedItem().toString();
-					    interfaces[1]=comboBoxInterface2.getSelectedItem().toString();
-					    interfaces[2]=comboBoxInterface3.getSelectedItem().toString();
-						interfaces[3]=comboBoxInterface4.getSelectedItem().toString();			
-						
-						c1.setInterfaces(interfaces);
+						interfacesbysnmp.add(0, comboBoxInterface1.getSelectedItem().toString());
+						interfacesbysnmp.add(1, comboBoxInterface1.getSelectedItem().toString());		
+						interfacesbysnmp.add(2, comboBoxInterface1.getSelectedItem().toString());
+						interfacesbysnmp.add(3, comboBoxInterface1.getSelectedItem().toString());
+						c1.setInterfaces(interfacesbysnmp);
 						
 						ips[0] = textIP1.getText();
 						ips[1] = textIP2.getText();
@@ -596,46 +662,15 @@ public class CMpls extends JDialog {
 						c1.setForwardingVRF(forwardingVRF);
 						
 						for (int j = 0; j < 4; j++) {
-							configResultView.append("Interface: " + c1.getInterfaces()[j] + 
+							configResultView.append("Interface: " + c1.getInterfaces(j) + 
 									" |IP: " + c1.getIpsInterfaces()[j] + " |Mascara: " + c1.getMasksInterfaces()[j] + 
 									" |Forwarding VRF:" + c1.getForwardingVRF()[j] + "\n"
 									);
 						}
-						
-				//configResultView.append("No se configuraron Rutas/Verifique su configuracion...");
-			
-			
-			
-			
-			
-			
-						
-			}
-		});
-		btnEnviar.setBounds(707, 629, 190, 23);
-		jpGeneric.add(btnEnviar);
-		
-		JButton btnNewButton_1 = new JButton("Cancelar");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_1.setBounds(567, 629, 114, 23);
-		jpGeneric.add(btnNewButton_1);
-		}
+}	
 		
 		
 		
-		
-	
-
-	
-
-
-	
-	
-//fin botones canel_enviar
-	
 	public String addroute(JPanel jpgeneric, int y, int count) {
 		
 			rutas[count]= new JTextField("ruta");
@@ -662,34 +697,9 @@ public class CMpls extends JDialog {
 	
 	
 	
-	 protected void ExecuteSelectedOptions() {
+
 
 		
-	}
-
-	protected void executeoptions() {
-	
-		 try {
-			 AutomatedTelnet telnet = new AutomatedTelnet("192.168.80.110",
-			 "raul",
-			 "cisco");
-			 telnet.ena("cisco");
-			 telnet.sendCommand("configure terminal");
-			 telnet.sendCommand("do show ip route");
-			 telnet.sendCommand("interface Ethernet0/0");
-			 telnet.sendCommand(telnet.backroot());
-			 
-
-			 telnet.disconnect();
-
-			 }
-			 catch (Exception e) {
-			 e.printStackTrace();
-			 }
-	}
-
-	
-	
 	public boolean  checkOverlapingInterface() {
 		ActionListener actionListener = new ActionListener() {
 			@Override
@@ -1111,6 +1121,17 @@ public class CMpls extends JDialog {
 		 checkboxRT.setEnabled(true);
 		 checkboxRT.setSelected(true);
 		 textFieldRT.setEditable(true);
+	}
+
+
+	public void parametrosconex(String ipp, String puertop, String comunityp,String usuariop, String passwordp) {
+		// se setean las variable de conexion snmp
+		ip=ipp;
+		puerto=puertop;
+		comunity=comunityp;
+		usuario=usuariop;
+		password=passwordp;
+		
 	}
 	}
 
