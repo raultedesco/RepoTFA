@@ -185,7 +185,9 @@ public void cbgp(CurrentConfig c1){
 //	!
 	
 	String cbgp="router bgp " + c1.getBgpProcess();
+	String cvecino="neighbor " +c1.getBgpNeighbor() +" remote-as ";
 	this.sendCommand(cbgp);
+	
 	this.sendCommand(backroot());
 	
 	

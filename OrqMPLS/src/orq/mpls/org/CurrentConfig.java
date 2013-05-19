@@ -22,6 +22,8 @@ private String [] ipsInterfaces = new String[4];
 private String [] masksInterfaces = new String[4];
 private boolean [] checkMPLSIP = new boolean[4];
 private String [] forwardingVRF = new String[4];
+private String bgpNeighbor;
+private String bgpRemoteAs;
 
 
 
@@ -202,6 +204,21 @@ public String listEIGRP() {
 	else{
 		return "EIGRP: Desactivado\n";
 }
+}
+public String getBgpNeighbor() {
+	return bgpNeighbor;
+	
+}
+public void setBgpNeighbor(String bgpNeighbor) {
+	this.bgpNeighbor = bgpNeighbor;
+}
+
+
+public String getBgpRemoteAs() {
+	return bgpRemoteAs;
+}
+public void setBgpRemoteAs(String bgpRemoteAs) {
+	this.bgpRemoteAs = bgpRemoteAs;
 }
 
 

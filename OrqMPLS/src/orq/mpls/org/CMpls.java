@@ -31,7 +31,8 @@ public class CMpls extends JDialog {
 	private String usuario;
 	private String password;
 	
-	private SNMPUtils con1 = new SNMPUtils();
+	//TODO descomentar esta linea para generar objeto que hable SNMP
+	//private SNMPUtils con1 = new SNMPUtils();
 	
 	private JTextField textFieldProcesoBGP;
 	private JCheckBox checkboxActiveBGP;
@@ -93,8 +94,13 @@ public class CMpls extends JDialog {
 	private JComboBox comboBoxInterface4;
 
 	private ArrayList<String> interfacesbysnmp;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField neighborAS;
+	private JTextField neighborIP;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JLabel label_2;
+	private JLabel label_3;
+	private JButton button;
 	
 	
 	
@@ -109,6 +115,7 @@ public class CMpls extends JDialog {
 	 * Create the dialog.
 	 */
 	public CMpls() {
+		setTitle("Orquestador MPLS");
 		
 		
 		
@@ -140,15 +147,15 @@ public class CMpls extends JDialog {
 		
 		checkboxCPE = new JCheckBox("CPE");
 		checkboxCPE.setSelected(false);
-		checkboxCPE.setBounds(147, 37, 53, 23);
+		checkboxCPE.setBounds(145, 37, 76, 23);
 		jp1.add(checkboxCPE);
 		
 		checkboxPE = new JCheckBox("PE");
-		checkboxPE.setBounds(202, 37, 53, 23);
+		checkboxPE.setBounds(207, 37, 53, 23);
 		jp1.add(checkboxPE);
 		
 		checkboxP = new JCheckBox("P");
-		checkboxP.setBounds(252, 37, 53, 23);
+		checkboxP.setBounds(259, 37, 53, 23);
 		jp1.add(checkboxP);
 		
 		checkboxActiveMpls = new JCheckBox("Active MPLS Global");
@@ -162,7 +169,7 @@ public class CMpls extends JDialog {
 		jp1.add(checkboxVrf);
 		
 		textFieldvrf = new JTextField("vrf");
-		textFieldvrf.setBounds(63, 89, 80, 20);
+		textFieldvrf.setBounds(63, 89, 80, 22);
 		textFieldvrf.setEditable(false);
 		jp1.add(textFieldvrf);
 		textFieldvrf.setColumns(10);
@@ -177,11 +184,11 @@ public class CMpls extends JDialog {
 		jp1.add(checkboxActiveBGP);
 		
 		JLabel lblProcess = new JLabel("Proceso");
-		lblProcess.setBounds(84, 145, 65, 14);
+		lblProcess.setBounds(84, 144, 65, 14);
 		jp1.add(lblProcess);
 		
 		textFieldProcesoBGP = new JTextField();
-		textFieldProcesoBGP.setBounds(151, 143, 89, 20);
+		textFieldProcesoBGP.setBounds(151, 143, 89, 22);
 		textFieldProcesoBGP.setEditable(false);
 		jp1.add(textFieldProcesoBGP);
 		textFieldProcesoBGP.setColumns(10);
@@ -196,7 +203,7 @@ public class CMpls extends JDialog {
 		jp1.add(lblProcessEigrp);
 		
 		textFieldProcesoEigrp = new JTextField();
-		textFieldProcesoEigrp.setBounds(151, 170, 89, 20);
+		textFieldProcesoEigrp.setBounds(151, 170, 89, 22);
 		textFieldProcesoEigrp.setEditable(false);
 		jp1.add(textFieldProcesoEigrp);
 		textFieldProcesoBGP.setColumns(10);
@@ -221,7 +228,7 @@ public class CMpls extends JDialog {
 				
 				textFieldRD = new JTextField();
 				textFieldRD.setToolTipText("Formato RD : ASN:nn");
-				textFieldRD.setBounds(202, 91, 80, 20);
+				textFieldRD.setBounds(202, 91, 80, 22);
 				textFieldRD.setEditable(false);
 				jp1.add(textFieldRD);
 				textFieldRD.setColumns(10);
@@ -229,7 +236,7 @@ public class CMpls extends JDialog {
 				textFieldRT = new JTextField();
 				textFieldRT.setToolTipText("Formato RD : ASN:nn");
 				textFieldRT.setColumns(10);
-				textFieldRT.setBounds(355, 91, 80, 20);
+				textFieldRT.setBounds(355, 91, 80, 22);
 				textFieldRT.setEditable(false);
 				jp1.add(textFieldRT);
 				
@@ -259,7 +266,7 @@ public class CMpls extends JDialog {
 				
 					
 				scrollPane1 = new JScrollPane();
-				scrollPane1.setBounds(826, 280, 500, 196);
+				scrollPane1.setBounds(826, 280, 517, 337);
 				//scrollPane.add(textArea);
 				scrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 				jp1.add(scrollPane1);
@@ -296,13 +303,13 @@ public class CMpls extends JDialog {
 				
 				textIP1 = new JTextField();
 				textIP1.setText("None");
-				textIP1.setBounds(151, 245, 114, 21);
+				textIP1.setBounds(151, 245, 114, 22);
 				jp1.add(textIP1);
 				textIP1.setColumns(10);
 				
 				textMask1 = new JTextField();
 				textMask1.setText("None");
-				textMask1.setBounds(275, 245, 114, 21);
+				textMask1.setBounds(275, 245, 114, 22);
 				jp1.add(textMask1);
 				textMask1.setColumns(10);
 				
@@ -312,20 +319,20 @@ public class CMpls extends JDialog {
 				
 				textForwardingVRF1 = new JTextField();
 				textForwardingVRF1.setText("None");
-				textForwardingVRF1.setBounds(461, 245, 114, 21);
+				textForwardingVRF1.setBounds(461, 245, 114, 22);
 				jp1.add(textForwardingVRF1);
 				textForwardingVRF1.setColumns(10);
 						
 						textIP2 = new JTextField();
 						textIP2.setText("None");
 						textIP2.setColumns(10);
-						textIP2.setBounds(151, 280, 114, 21);
+						textIP2.setBounds(151, 280, 114, 22);
 						jp1.add(textIP2);
 						
 						textMask2 = new JTextField();
 						textMask2.setText("None");
 						textMask2.setColumns(10);
-						textMask2.setBounds(275, 280, 114, 21);
+						textMask2.setBounds(275, 280, 114, 22);
 						jp1.add(textMask2);
 						
 						checkboxMPLSIP2 = new JCheckBox("");
@@ -335,19 +342,19 @@ public class CMpls extends JDialog {
 						textForwardingVRF2 = new JTextField();
 						textForwardingVRF2.setText("None");
 						textForwardingVRF2.setColumns(10);
-						textForwardingVRF2.setBounds(461, 280, 114, 21);
+						textForwardingVRF2.setBounds(461, 280, 114, 22);
 						jp1.add(textForwardingVRF2);
 						
 						textIP3 = new JTextField();
 						textIP3.setText("None");
 						textIP3.setColumns(10);
-						textIP3.setBounds(151, 315, 114, 21);
+						textIP3.setBounds(151, 315, 114, 22);
 						jp1.add(textIP3);
 						
 						textMask3 = new JTextField();
 						textMask3.setText("None");
 						textMask3.setColumns(10);
-						textMask3.setBounds(275, 315, 114, 21);
+						textMask3.setBounds(275, 315, 114, 22);
 						jp1.add(textMask3);
 						
 						checkboxMPLSIP3 = new JCheckBox("");
@@ -357,19 +364,19 @@ public class CMpls extends JDialog {
 						textForwardingVRF3 = new JTextField();
 						textForwardingVRF3.setText("None");
 						textForwardingVRF3.setColumns(10);
-						textForwardingVRF3.setBounds(461, 315, 114, 21);
+						textForwardingVRF3.setBounds(461, 315, 114, 22);
 						jp1.add(textForwardingVRF3);
 						
 						textIP4 = new JTextField();
 						textIP4.setText("None");
 						textIP4.setColumns(10);
-						textIP4.setBounds(151, 346, 114, 21);
+						textIP4.setBounds(151, 346, 114, 22);
 						jp1.add(textIP4);
 						
 						textMask4 = new JTextField();
 						textMask4.setText("None");
 						textMask4.setColumns(10);
-						textMask4.setBounds(275, 346, 114, 21);
+						textMask4.setBounds(275, 346, 114, 22);
 						jp1.add(textMask4);
 						
 						checkboxMPLSIP4 = new JCheckBox("");
@@ -379,14 +386,14 @@ public class CMpls extends JDialog {
 						textForwardingVRF4 = new JTextField();
 						textForwardingVRF4.setText("None");
 						textForwardingVRF4.setColumns(10);
-						textForwardingVRF4.setBounds(461, 346, 114, 21);
+						textForwardingVRF4.setBounds(461, 346, 114, 22);
 						jp1.add(textForwardingVRF4);
 						
 						
 						
 		
-		JLabel lblRutas = new JLabel("Rutas");
-		lblRutas.setBounds(10, 400, 70, 15);
+		JLabel lblRutas = new JLabel("Rutas Estaticas");
+		lblRutas.setBounds(10, 400, 133, 15);
 		jp1.add(lblRutas);
 		
 		JLabel lblNewLabel = new JLabel("Mascara");
@@ -395,15 +402,16 @@ public class CMpls extends JDialog {
 		
 		buttonAddRutas_Mask = new JButton("+");
 		//agrego el boton +  al panel
-		buttonAddRutas_Mask.setBounds(242, 400, 44, 20);
+		buttonAddRutas_Mask.setBounds(244, 396, 44, 22);
 		jp1.add(buttonAddRutas_Mask);
 		
 		
 		interfacesbysnmp = new ArrayList<>();
 				try {
-					interfacesbysnmp = con1.printInterface();
+					//TODO descomentar esta linea para generar objeto que hable SNMP
+					//interfacesbysnmp = con1.printInterface();
 					interfacesbysnmp.add("None");
-							} catch (IOException e2) {
+							} catch (Exception e2) {//cambiar por IOException
 					
 					e2.printStackTrace();
 				}
@@ -412,7 +420,7 @@ public class CMpls extends JDialog {
 		comboBoxInterface1.setEnabled(true);
 		comboBoxInterface1.setToolTipText("Interfaces Equipo");
 		comboBoxInterface1.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-		comboBoxInterface1.setBounds(10, 246, 133, 19);
+		comboBoxInterface1.setBounds(10, 246, 133, 22);
 		jp1.add(comboBoxInterface1);
 
 		comboBoxInterface2 = new JComboBox();
@@ -420,7 +428,7 @@ public class CMpls extends JDialog {
 		comboBoxInterface2.setToolTipText("Interfaces Equipo");
 		comboBoxInterface2.removeAllItems();
 		//comboBoxInterface2.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-		comboBoxInterface2.setBounds(10, 280, 133, 19);
+		comboBoxInterface2.setBounds(10, 280, 133, 22);
 		jp1.add(comboBoxInterface2);
 		
 		comboBoxInterface3 = new JComboBox();
@@ -428,14 +436,14 @@ public class CMpls extends JDialog {
 		comboBoxInterface3.setToolTipText("Interfaces Equipo");
 		comboBoxInterface3.removeAllItems();
 		//comboBoxInterface3.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-		comboBoxInterface3.setBounds(10, 315, 133, 19);
+		comboBoxInterface3.setBounds(10, 315, 133, 22);
 		jp1.add(comboBoxInterface3);
 		
 		comboBoxInterface4 = new JComboBox();
 		comboBoxInterface4.setEnabled(true);
 		comboBoxInterface4.setToolTipText("Interfaces Equipo");
 		//comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-		comboBoxInterface4.setBounds(10, 346, 133, 19);
+		comboBoxInterface4.setBounds(10, 346, 133, 22);
 		jp1.add(comboBoxInterface4);
 		
 		
@@ -458,19 +466,57 @@ public class CMpls extends JDialog {
 		lblAs.setBounds(252, 144, 37, 17);
 		jp1.add(lblAs);
 		
-		textField = new JTextField();
-		textField.setBounds(295, 139, 65, 27);
-		jp1.add(textField);
-		textField.setColumns(10);
+		neighborAS = new JTextField();
+		neighborAS.setBounds(275, 141, 65, 22);
+		jp1.add(neighborAS);
+		neighborAS.setColumns(10);
 		
 		JLabel lblVecinoBgp = new JLabel("Vecino BGP");
-		lblVecinoBgp.setBounds(382, 144, 89, 17);
+		lblVecinoBgp.setBounds(355, 144, 89, 17);
 		jp1.add(lblVecinoBgp);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(479, 139, 140, 27);
-		jp1.add(textField_1);
-		textField_1.setColumns(10);
+		neighborIP = new JTextField();
+		neighborIP.setBounds(453, 141, 140, 22);
+		jp1.add(neighborIP);
+		neighborIP.setColumns(10);
+		
+		JLabel label = new JLabel("AS");
+		label.setBounds(252, 171, 37, 17);
+		jp1.add(label);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(275, 168, 65, 22);
+		jp1.add(textField_2);
+		
+		JLabel label_1 = new JLabel("Vecino EIGRP");
+		label_1.setBounds(355, 171, 89, 17);
+		jp1.add(label_1);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(453, 168, 140, 22);
+		jp1.add(textField_3);
+		
+		label_2 = new JLabel("Rutas BGP/EIGRP");
+		label_2.setBounds(321, 397, 133, 15);
+		jp1.add(label_2);
+		
+		label_3 = new JLabel("Mascara");
+		label_3.setBounds(466, 397, 70, 15);
+		jp1.add(label_3);
+		
+		button = new JButton("+");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO codigo para generar botones de rutas BGP / EIGRP
+				
+				
+				
+			}
+		});
+		button.setBounds(555, 393, 44, 22);
+		jp1.add(button);
 		
 		buttonAddRutas_Mask.addActionListener(new ActionListener() {
 		
@@ -591,6 +637,8 @@ public class CMpls extends JDialog {
 			if (activeBGPFlag) {
 				c1.setBgpflag(true);
 				c1.setBgpProcess(textFieldProcesoBGP.getText());
+				c1.setBgpNeighbor(neighborIP.getText());
+				c1.setBgpRemoteAs(neighborAS.getText());
 				
 			}
 			if (activeEigrpFlag) {
@@ -675,7 +723,7 @@ public class CMpls extends JDialog {
 		
 			rutas[count]= new JTextField("ruta");
 			rutas[count].setVisible(true);
-			rutas[count].setBounds(10, y, 135, 21);
+			rutas[count].setBounds(10, y, 135, 22);
 			rutas[count].validate();
 
 		    jpgeneric.add(rutas[count]);
@@ -689,7 +737,7 @@ public class CMpls extends JDialog {
 	public String addroutemask(JPanel jpgeneric, int y, int count) {
 			mascara[count]  = new JTextField("mascara");
 			mascara[count].setVisible(true);
-			mascara[count].setBounds(151, y,135 , 21);
+			mascara[count].setBounds(151, y,135 , 22);
 		    jpgeneric.add(mascara[count]);
 		    return mascara[count].getText();
 	

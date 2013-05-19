@@ -64,6 +64,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setTitle("Orquestador MPLS - Login");
 	
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
