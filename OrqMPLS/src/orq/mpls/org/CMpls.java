@@ -140,7 +140,7 @@ public class CMpls extends JDialog {
 		
 		checkboxActiveCEF = new JCheckBox("Active CEF");
 		checkboxActiveCEF.setSelected(true);
-		checkboxActiveCEF.setBounds(10, 37, 97, 23);
+		checkboxActiveCEF.setBounds(10, 37, 114, 23);
 		jp1.add(checkboxActiveCEF);
 		
 		JLabel lblSettingForCpe = new JLabel("Tipo de Dispositivo");
@@ -261,8 +261,8 @@ public class CMpls extends JDialog {
 					
 					
 					//segundo jtexarea para mostrar los comandos
-					JLabel lblNewLabel_29 = new JLabel("Configuracion Generada");
-					lblNewLabel_29.setBounds(826, 255, 218, 15);
+					JLabel lblNewLabel_29 = new JLabel("Resultado de Aplicacion de Configuracion  ");
+					lblNewLabel_29.setBounds(826, 255, 314, 15);
 					jp1.add(lblNewLabel_29);
 					//jp1.add(textArea);
 					
@@ -455,9 +455,9 @@ public class CMpls extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				setcurrentconfigvalues();
 				AutomatedTelnet send = new AutomatedTelnet("192.168.80.110", "raul", "cisco");
-				send.ena("cisco");
-				send.configmode();
-				send.cvrf(c1);
+				configGenView.append(send.ena("cisco"));
+				configGenView.append(send.configmode());
+				configGenView.append(send.cvrf(c1));
 				send.disconnect();
 			}
 		});
@@ -629,14 +629,13 @@ this.checkOverlapingInterface();
 			configResultView.append(c1.listMPLS());
 			configResultView.append(c1.listBGP());
 			configResultView.append(c1.listEIGRP());
-			configResultView.append(c1.routes());
-			
-			c1.listConfig();
+			configResultView.append(c1.listStaticRoutes());
+			//c1.listConfig();
 			
 					// Parte de Configuracion de las rutas
 					for (int i = 0; i < count; i++) {
-						System.out.println("ruta:" + rutas[i].getText());
-						System.out.println("mascara: " + mascara[i].getText());
+						//System.out.println("ruta:" + rutas[i].getText());
+						//System.out.println("mascara: " + mascara[i].getText());
 						//mover los valores del arreglo de jtexfield a una variable temporal de tipo String
 						String temprutas[] = new String[count];
 						String tempmascaras[] = new String[count];
@@ -652,7 +651,25 @@ this.checkOverlapingInterface();
 						configResultView.append("Ruta:" + c1.getRutas()[i] + " Mascara:" + c1.getMascaras()[i]+"\n");
 					}
 				
-					//Parte de Configuracion de las parte de mpls sobre las interfaces
+					for (int i = 0; i < countDinamic; i++) {
+						//System.out.println("ruta:" + rutas[i].getText());
+						//System.out.println("mascara: " + mascara[i].getText());
+						//mover los valores del arreglo de jtexfield a una variable temporal de tipo String
+						String temprutas[] = new String[countDinamic];
+						String tempmascaras[] = new String[countDinamic];
+						//crear e inicializar arreglos temporales para las rutas y mascaras
+						String tempr= rutasdinamic[i].getText();
+						String tempm= mascaradinamic[i].getText();
+						//pasarles el valor de lo jtexfield correspondiente que estan contenidas en las variales temporales
+						temprutas[i]=tempr;
+						tempmascaras[i]=tempm;
+						//guardar los valores en el objeto configuracion para su almacenado en BD y posterior confeccion de logs
+						c1.setRutasdinamic(temprutas);
+						c1.setMascarasdinamic(tempmascaras);
+						configResultView.append("Ruta Dinamica:" + c1.getRutasdinamic()[i] + " Mascara:" + c1.getMascarasdinamic()[i]+"\n");
+					}
+					
+						//Parte de Configuracion de las parte de mpls sobre las interfaces
 						String ips[] = new String[4];
 						String masks[] = new String[4];
 						boolean mpslip[] = new boolean[4];
@@ -689,12 +706,11 @@ this.checkOverlapingInterface();
 						c1.setForwardingVRF(forwardingVRF);
 						
 						for (int j = 0; j < 4; j++) {
-							configResultView.append("Interface: " + c1.getInterfaces(j) + 
-									" |IP: " + c1.getIpsInterfaces()[j] + " |Mascara: " + c1.getMasksInterfaces()[j] + 
-									" |Forwarding VRF:" + c1.getForwardingVRF()[j] + "\n"
-									);
+								
+							configResultView.append(c1.listinterfaces_Vrf_mplsip(j));
 						}
 }	
+
 		
 		
 		

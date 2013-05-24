@@ -111,17 +111,21 @@ e.printStackTrace();
 //enviar CtrlZ a la terminal para asegurar que se vuelve al prompt root
 
 
-public void ena(String password) {
-try {
+public String ena(String password) {
+	String callback = null;
+	try {
+
 write("ena");
-readUntil("Password:");
+callback=readUntil("Password:");
 write(password);
 prompt = "#";
 readUntil(prompt);
+return callback + password;
 }
 catch (Exception e) {
 e.printStackTrace();
 }
+return callback;
 }
 
 public static String backroot() {
@@ -131,16 +135,16 @@ public static String backroot() {
 	return end;
 }
 
-public void cvrf(CurrentConfig c1){
-	
+public String cvrf(CurrentConfig c1){
+	String resul;
 	String cvrf = "ip vrf " + c1.getVrfname();
-	this.sendCommand(cvrf);
+	resul=this.sendCommand(cvrf);
 	String crd="rd " + c1.getVrfrd();
-	this.sendCommand(crd);
+	resul = resul + this.sendCommand(crd);
 	String crt="route-target " + c1.getVrfrt();
-	this.sendCommand(crt);
-	this.sendCommand(backroot());
-	
+	resul = resul + this.sendCommand(crt);
+	resul = resul + this.sendCommand(backroot());
+	return resul;
 	
 	
 }
@@ -242,10 +246,11 @@ e.printStackTrace();
 }
 
 
-public void configmode() {
+public String configmode() {
 	
 	String cmode="configure terminal";
-	this.sendCommand(cmode);
+	return this.sendCommand(cmode);
+	
 }
 
 }

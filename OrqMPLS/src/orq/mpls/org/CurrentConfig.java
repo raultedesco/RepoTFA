@@ -17,6 +17,8 @@ private boolean cefboolean;
 private boolean mplsipboolean;
 private String [] rutas= new String[5];
 private String [] mascaras= new String[5];
+private String [] rutasdinamic= new String[5];
+private String [] mascarasdinamic= new String[5];
 private ArrayList<String> interfaces = new ArrayList<>();
 private String [] ipsInterfaces = new String[4];
 private String [] masksInterfaces = new String[4];
@@ -181,7 +183,7 @@ public String listMPLS(){
 		
 			} 
 	else {
-		return "MPLS: Desactivado";
+		return "MPLS: Desactivado\n";
 	}
 	
 	
@@ -220,12 +222,30 @@ public String getBgpRemoteAs() {
 public void setBgpRemoteAs(String bgpRemoteAs) {
 	this.bgpRemoteAs = bgpRemoteAs;
 }
-public String routes() {
+public String listStaticRoutes() {
 	// TODO Auto-generated method stub
 	return null;
 }
 
-
+public String listinterfaces_Vrf_mplsip(int j){
+	return "Interface: " + getInterfaces(j) + 
+									" |IP: " + getIpsInterfaces()[j] + " |Mascara: " + getMasksInterfaces()[j] + 
+									" \n[Forwarding VRF:" + getForwardingVRF()[j] + "]"+"\n";
+	
+	
+}
+public String [] getRutasdinamic() {
+	return rutasdinamic;
+}
+public void setRutasdinamic(String [] rutasdinamic) {
+	this.rutasdinamic = rutasdinamic;
+}
+public String [] getMascarasdinamic() {
+	return mascarasdinamic;
+}
+public void setMascarasdinamic(String [] mascarasdinamic) {
+	this.mascarasdinamic = mascarasdinamic;
+}
 
 }
 
