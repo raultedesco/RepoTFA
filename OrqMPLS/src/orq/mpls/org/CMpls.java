@@ -103,6 +103,10 @@ public class CMpls extends JDialog {
 	private JLabel label_2;
 	private JLabel label_3;
 	private JButton buttonAddRutas_Mask_Dinamic;
+	private JLabel lblProcess;
+	private JLabel lblProcessEigrp;
+	private JLabel lblAs;
+	private JLabel lblVecinoBgp;
 	
 	
 	
@@ -149,15 +153,15 @@ public class CMpls extends JDialog {
 		
 		checkboxCPE = new JCheckBox("CPE");
 		checkboxCPE.setSelected(false);
-		checkboxCPE.setBounds(145, 37, 76, 23);
+		checkboxCPE.setBounds(145, 37, 65, 23);
 		jp1.add(checkboxCPE);
 		
 		checkboxPE = new JCheckBox("PE");
-		checkboxPE.setBounds(207, 37, 53, 23);
+		checkboxPE.setBounds(202, 37, 53, 23);
 		jp1.add(checkboxPE);
 		
 		checkboxP = new JCheckBox("P");
-		checkboxP.setBounds(259, 37, 53, 23);
+		checkboxP.setBounds(254, 37, 53, 23);
 		jp1.add(checkboxP);
 		
 		checkboxActiveMpls = new JCheckBox("Active MPLS Global");
@@ -185,13 +189,15 @@ public class CMpls extends JDialog {
 		checkboxActiveBGP.setBounds(10, 144, 58, 23);
 		jp1.add(checkboxActiveBGP);
 		
-		JLabel lblProcess = new JLabel("Proceso");
+		lblProcess = new JLabel("Proceso");
 		lblProcess.setBounds(84, 144, 65, 23);
+		lblProcess.setEnabled(false);
 		jp1.add(lblProcess);
 		
 		textFieldProcesoBGP = new JTextField();
 		textFieldProcesoBGP.setBounds(151, 143, 89, 22);
 		textFieldProcesoBGP.setEditable(false);
+		textFieldProcesoBGP.setEnabled(false);
 		jp1.add(textFieldProcesoBGP);
 		textFieldProcesoBGP.setColumns(10);
 		
@@ -200,13 +206,15 @@ public class CMpls extends JDialog {
 		checkboxActiveEigrp.setBounds(10, 168, 65, 23);
 		jp1.add(checkboxActiveEigrp);
 		
-		JLabel lblProcessEigrp = new JLabel("Proceso");
+		lblProcessEigrp = new JLabel("Proceso");
 		lblProcessEigrp.setBounds(84, 168, 65, 20);
+		lblProcessEigrp.setEnabled(false);
 		jp1.add(lblProcessEigrp);
 		
 		textFieldProcesoEigrp = new JTextField();
 		textFieldProcesoEigrp.setBounds(151, 168, 89, 22);
 		textFieldProcesoEigrp.setEditable(false);
+		textFieldProcesoEigrp.setEnabled(false);
 		jp1.add(textFieldProcesoEigrp);
 		textFieldProcesoBGP.setColumns(10);
 		//Final Componentes Panel 1
@@ -464,21 +472,25 @@ public class CMpls extends JDialog {
 		btnNewButton.setBounds(920, 629, 114, 23);
 		jp1.add(btnNewButton);
 		
-		JLabel lblAs = new JLabel("AS");
+		lblAs = new JLabel("AS");
 		lblAs.setBounds(252, 144, 37, 23);
+		lblAs.setEnabled(false);
 		jp1.add(lblAs);
 		
 		neighborAS = new JTextField();
 		neighborAS.setBounds(275, 144, 65, 22);
+		neighborAS.setEnabled(false);
 		jp1.add(neighborAS);
 		neighborAS.setColumns(10);
 		
-		JLabel lblVecinoBgp = new JLabel("Vecino BGP");
+		lblVecinoBgp = new JLabel("Vecino BGP");
 		lblVecinoBgp.setBounds(355, 144, 89, 23);
+		lblVecinoBgp.setEnabled(false);
 		jp1.add(lblVecinoBgp);
 		
 		neighborIP = new JTextField();
-		neighborIP.setBounds(459, 144, 140, 22);
+		neighborIP.setBounds(459, 144, 114, 22);
+		neighborIP.setEnabled(false);
 		jp1.add(neighborIP);
 		neighborIP.setColumns(10);
 		
@@ -611,7 +623,10 @@ this.checkOverlapingInterface();
 				c1.setVrfrd(textFieldRD.getText());
 				c1.setVrfrt(textFieldRT.getText());
 			}
-						
+			else{
+				c1.setMplsipboolean(false);
+			}	
+			
 			if (activeBGPFlag) {
 				c1.setBgpflag(true);
 				c1.setBgpProcess(textFieldProcesoBGP.getText());
@@ -806,6 +821,7 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 					 checkboxActiveEigrp.setEnabled(false);
 					 textFieldProcesoEigrp.setEditable(false);
 					 activeBGPFlag=true;
+					 activebgp(true);
 					
 				}
 				 if (checkboxActiveBGP.isSelected() == false) {
@@ -813,6 +829,7 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 					 checkboxActiveEigrp.setEnabled(true);
 					 textFieldProcesoEigrp.setEditable(false);
 					 activeBGPFlag=false;
+					 activebgp(false);
 					
 				}			}
 		};
@@ -820,13 +837,30 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 		return activeBGPFlag;
 	 }
 	 
-	 public boolean  checkActiveCheckEigrp() {
+	 protected void activebgp(boolean estado) {
+		// TODO Auto-generated method stub
+		lblProcess.setEnabled(estado);
+		textFieldProcesoBGP.setEnabled(estado);
+		textFieldProcesoBGP.setEditable(estado);
+		lblAs.setEnabled(estado);
+		neighborAS.setEnabled(estado);
+		neighborAS.setEditable(estado);
+		lblVecinoBgp.setEnabled(estado);
+		neighborIP.setEnabled(estado);
+		neighborIP.setEditable(estado);
+		
+		
+	}
+
+
+	public boolean  checkActiveCheckEigrp() {
 		 ItemListener itemlistener = new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				
 				 if (checkboxActiveEigrp.isSelected()) {
+					 textFieldProcesoEigrp.setEnabled(true);
 					 textFieldProcesoEigrp.setEditable(true);
 					 checkboxActiveBGP.setEnabled(false);
 					 textFieldProcesoBGP.setEditable(false);
@@ -835,6 +869,7 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 					
 				}
 				 if (checkboxActiveEigrp.isSelected() == false) {
+					 textFieldProcesoEigrp.setEnabled(false);
 					 textFieldProcesoBGP.setEditable(false);
 					 checkboxActiveBGP.setEnabled(true);
 					 textFieldProcesoEigrp.setEditable(false);
@@ -938,6 +973,7 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxPE.setEnabled(false);
 				checkboxActiveCEF.setEnabled(true);
 				checkboxActiveMpls.setEnabled(false);
+				activeMplsFlag=false;
 							
 				desactiveVRF();
 				desactiveVrfForwarding();
@@ -953,6 +989,7 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				desactiveVrfForwarding();
 				desactiveMplsIP();
 				activeCPEFlag = false;
+				activeMplsFlag=false;
 
 			}
 		}
@@ -974,6 +1011,8 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxCPE.setEnabled(false);
 				checkboxP.setEnabled(false);
 				checkboxActiveMpls.setEnabled(true);
+				checkboxActiveMpls.setSelected(true);
+				activeMplsFlag=true;
 				activePEFlag=true;
 				activeVRF();
 				desactiveMplsIP();
@@ -988,6 +1027,7 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				desactiveVRF();
 				desactiveMplsIP();
 				activePEFlag=false;
+				activeMplsFlag=false;
 			}
 		}
 	};
@@ -1009,10 +1049,12 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxCPE.setEnabled(false);
 				checkboxPE.setEnabled(false);
 				checkboxActiveMpls.setEnabled(true);
+				checkboxActiveMpls.setSelected(true);
 				activePFlag=true;
 				activeMplsIP();
 				desactiveVRF();
 				desactiveVrfForwarding();
+				activeMplsFlag=true;
 			}
 			if (checkboxP.isSelected() == false) {
 				checkboxCPE.setEnabled(true);
@@ -1022,6 +1064,7 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				desactiveVRF();
 				desactiveVrfForwarding();
 				activePFlag=false;
+				activeMplsFlag=false;
 			}
 		}
 	};
