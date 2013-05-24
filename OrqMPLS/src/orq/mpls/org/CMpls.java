@@ -59,8 +59,12 @@ public class CMpls extends JDialog {
 	private JTextField textFieldRT;
 	private int count = 0;
 	private int y=430;
+	private int countDinamic=0;
+	private int y_dinamic=430;
 	private JTextField []rutas = new JTextField[5]; 
 	private JTextField [] mascara= new JTextField[5]; 	
+	private JTextField []rutasdinamic = new JTextField[5]; 
+	private JTextField [] mascaradinamic= new JTextField[5]; 	
 	private JCheckBox checkboxRT;
 	private JCheckBox checkboxRD;
 	private JTextArea configResultView;
@@ -96,11 +100,9 @@ public class CMpls extends JDialog {
 	private ArrayList<String> interfacesbysnmp;
 	private JTextField neighborAS;
 	private JTextField neighborIP;
-	private JTextField textField_2;
-	private JTextField textField_3;
 	private JLabel label_2;
 	private JLabel label_3;
-	private JButton button;
+	private JButton buttonAddRutas_Mask_Dinamic;
 	
 	
 	
@@ -163,8 +165,8 @@ public class CMpls extends JDialog {
 		checkboxActiveMpls.setEnabled(false);
 		jp1.add(checkboxActiveMpls);
 		
-		checkboxVrf = new JCheckBox();
-		checkboxVrf.setBounds(10, 89, 45, 23);
+		checkboxVrf = new JCheckBox("Vrf");
+		checkboxVrf.setBounds(10, 89, 58, 23);
 		checkboxVrf.setEnabled(false);
 		jp1.add(checkboxVrf);
 		
@@ -180,11 +182,11 @@ public class CMpls extends JDialog {
 		
 		checkboxActiveBGP = new JCheckBox("BGP");
 		checkboxActiveBGP.setSelected(false);
-		checkboxActiveBGP.setBounds(10, 141, 58, 23);
+		checkboxActiveBGP.setBounds(10, 144, 58, 23);
 		jp1.add(checkboxActiveBGP);
 		
 		JLabel lblProcess = new JLabel("Proceso");
-		lblProcess.setBounds(84, 144, 65, 14);
+		lblProcess.setBounds(84, 144, 65, 23);
 		jp1.add(lblProcess);
 		
 		textFieldProcesoBGP = new JTextField();
@@ -199,11 +201,11 @@ public class CMpls extends JDialog {
 		jp1.add(checkboxActiveEigrp);
 		
 		JLabel lblProcessEigrp = new JLabel("Proceso");
-		lblProcessEigrp.setBounds(84, 171, 65, 14);
+		lblProcessEigrp.setBounds(84, 168, 65, 20);
 		jp1.add(lblProcessEigrp);
 		
 		textFieldProcesoEigrp = new JTextField();
-		textFieldProcesoEigrp.setBounds(151, 170, 89, 22);
+		textFieldProcesoEigrp.setBounds(151, 168, 89, 22);
 		textFieldProcesoEigrp.setEditable(false);
 		jp1.add(textFieldProcesoEigrp);
 		textFieldProcesoBGP.setColumns(10);
@@ -212,116 +214,116 @@ public class CMpls extends JDialog {
 		botonesCancel_Enviar(jp1);
 		
 					
-				mensajelimiterutas = new JLabel("");
-				mensajelimiterutas.setBounds(10, 602, 589, 15);
-				jp1.add(mensajelimiterutas);
-				
-				checkboxRD = new JCheckBox("RD");
-				checkboxRD.setBounds(148, 89, 53, 23);
-				checkboxRD.setEnabled(false);
-				jp1.add(checkboxRD);
-				
-				checkboxRT = new JCheckBox("RT");
-				checkboxRT.setBounds(302, 89, 53, 23);
-				checkboxRT.setEnabled(false);
-				jp1.add(checkboxRT);
-				
-				textFieldRD = new JTextField();
-				textFieldRD.setToolTipText("Formato RD : ASN:nn");
-				textFieldRD.setBounds(202, 91, 80, 22);
-				textFieldRD.setEditable(false);
-				jp1.add(textFieldRD);
-				textFieldRD.setColumns(10);
-				
-				textFieldRT = new JTextField();
-				textFieldRT.setToolTipText("Formato RD : ASN:nn");
-				textFieldRT.setColumns(10);
-				textFieldRT.setBounds(355, 91, 80, 22);
-				textFieldRT.setEditable(false);
-				jp1.add(textFieldRT);
-				
-				JLabel lblNewLabel_1 = new JLabel("Parametros de Configuracion");
-				lblNewLabel_1.setBounds(826, 20, 218, 15);
-				jp1.add(lblNewLabel_1);
-				//jp1.add(textArea);
-				
+					mensajelimiterutas = new JLabel("");
+					mensajelimiterutas.setBounds(10, 602, 804, 15);
+					jp1.add(mensajelimiterutas);
 					
-				scrollPane = new JScrollPane();
-				scrollPane.setBounds(826, 37, 500, 196);
-				//scrollPane.add(textArea);
-				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-				jp1.add(scrollPane);
-				
-				configResultView = new JTextArea();
-				scrollPane.setViewportView(configResultView);
-				configResultView.setLineWrap(true);
-				configResultView.setEditable(false);
-				
-				
-				//segundo jtexarea para mostrar los comandos
-				JLabel lblNewLabel_29 = new JLabel("Configuracion Generada");
-				lblNewLabel_29.setBounds(826, 255, 218, 15);
-				jp1.add(lblNewLabel_29);
-				//jp1.add(textArea);
-				
+					checkboxRD = new JCheckBox("RD");
+					checkboxRD.setBounds(148, 89, 53, 23);
+					checkboxRD.setEnabled(false);
+					jp1.add(checkboxRD);
 					
-				scrollPane1 = new JScrollPane();
-				scrollPane1.setBounds(826, 280, 517, 337);
-				//scrollPane.add(textArea);
-				scrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-				jp1.add(scrollPane1);
-				
-				configGenView = new JTextArea();
-				scrollPane1.setViewportView(configGenView);
-				configGenView.setLineWrap(true);
-				configGenView.setEditable(false);
-				//fin segundo jtexarea
-				
-							
-				
-				
-				
-				JLabel lblInterfaces = new JLabel("Interfaces");
-				lblInterfaces.setBounds(12, 218, 95, 15);
-				jp1.add(lblInterfaces);
-				
-				JLabel lblNewLabel_2 = new JLabel("IP");
-				lblNewLabel_2.setBounds(151, 218, 37, 15);
-				jp1.add(lblNewLabel_2);
-				
-				JLabel lblNewLabel_3 = new JLabel("Mascara");
-				lblNewLabel_3.setBounds(275, 218, 70, 15);
-				jp1.add(lblNewLabel_3);
-				
-				JLabel lblNewLabel_4 = new JLabel("MPLS ");
-				lblNewLabel_4.setBounds(401, 218, 70, 15);
-				jp1.add(lblNewLabel_4);
-				
-				JLabel lblNewLabel_5 = new JLabel("Forwarding VRF");
-				lblNewLabel_5.setBounds(461, 218, 132, 15);
-				jp1.add(lblNewLabel_5);
-				
-				textIP1 = new JTextField();
-				textIP1.setText("None");
-				textIP1.setBounds(151, 245, 114, 22);
-				jp1.add(textIP1);
-				textIP1.setColumns(10);
-				
-				textMask1 = new JTextField();
-				textMask1.setText("None");
-				textMask1.setBounds(275, 245, 114, 22);
-				jp1.add(textMask1);
-				textMask1.setColumns(10);
-				
-				checkboxMPLSIP1 = new JCheckBox("");
-				checkboxMPLSIP1.setBounds(400, 241, 45, 23);
-				jp1.add(checkboxMPLSIP1);
-				
-				textForwardingVRF1 = new JTextField();
-				textForwardingVRF1.setText("None");
-				textForwardingVRF1.setBounds(461, 245, 114, 22);
-				jp1.add(textForwardingVRF1);
-				textForwardingVRF1.setColumns(10);
+					checkboxRT = new JCheckBox("RT");
+					checkboxRT.setBounds(302, 89, 53, 23);
+					checkboxRT.setEnabled(false);
+					jp1.add(checkboxRT);
+					
+					textFieldRD = new JTextField();
+					textFieldRD.setToolTipText("Formato RD : ASN:nn");
+					textFieldRD.setBounds(202, 91, 80, 22);
+					textFieldRD.setEditable(false);
+					jp1.add(textFieldRD);
+					textFieldRD.setColumns(10);
+					
+					textFieldRT = new JTextField();
+					textFieldRT.setToolTipText("Formato RD : ASN:nn");
+					textFieldRT.setColumns(10);
+					textFieldRT.setBounds(355, 91, 80, 22);
+					textFieldRT.setEditable(false);
+					jp1.add(textFieldRT);
+					
+					JLabel lblNewLabel_1 = new JLabel("Parametros de Configuracion");
+					lblNewLabel_1.setBounds(826, 20, 218, 15);
+					jp1.add(lblNewLabel_1);
+					//jp1.add(textArea);
+					
+						
+					scrollPane = new JScrollPane();
+					scrollPane.setBounds(826, 37, 517, 196);
+					//scrollPane.add(textArea);
+					scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+					jp1.add(scrollPane);
+					
+					configResultView = new JTextArea();
+					scrollPane.setViewportView(configResultView);
+					configResultView.setLineWrap(true);
+					configResultView.setEditable(false);
+					
+					
+					//segundo jtexarea para mostrar los comandos
+					JLabel lblNewLabel_29 = new JLabel("Configuracion Generada");
+					lblNewLabel_29.setBounds(826, 255, 218, 15);
+					jp1.add(lblNewLabel_29);
+					//jp1.add(textArea);
+					
+						
+					scrollPane1 = new JScrollPane();
+					scrollPane1.setBounds(826, 280, 517, 337);
+					//scrollPane.add(textArea);
+					scrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+					jp1.add(scrollPane1);
+					
+					configGenView = new JTextArea();
+					scrollPane1.setViewportView(configGenView);
+					configGenView.setLineWrap(true);
+					configGenView.setEditable(false);
+					//fin segundo jtexarea
+					
+								
+					
+					
+					
+					JLabel lblInterfaces = new JLabel("Interfaces");
+					lblInterfaces.setBounds(12, 218, 95, 15);
+					jp1.add(lblInterfaces);
+					
+					JLabel lblNewLabel_2 = new JLabel("IP");
+					lblNewLabel_2.setBounds(151, 218, 37, 15);
+					jp1.add(lblNewLabel_2);
+					
+					JLabel lblNewLabel_3 = new JLabel("Mascara");
+					lblNewLabel_3.setBounds(275, 218, 70, 15);
+					jp1.add(lblNewLabel_3);
+					
+					JLabel lblNewLabel_4 = new JLabel("MPLS ");
+					lblNewLabel_4.setBounds(401, 218, 70, 15);
+					jp1.add(lblNewLabel_4);
+					
+					JLabel lblNewLabel_5 = new JLabel("Forwarding VRF");
+					lblNewLabel_5.setBounds(461, 218, 132, 15);
+					jp1.add(lblNewLabel_5);
+					
+					textIP1 = new JTextField();
+					textIP1.setText("None");
+					textIP1.setBounds(151, 245, 114, 22);
+					jp1.add(textIP1);
+					textIP1.setColumns(10);
+					
+					textMask1 = new JTextField();
+					textMask1.setText("None");
+					textMask1.setBounds(275, 245, 114, 22);
+					jp1.add(textMask1);
+					textMask1.setColumns(10);
+					
+					checkboxMPLSIP1 = new JCheckBox("");
+					checkboxMPLSIP1.setBounds(401, 244, 45, 23);
+					jp1.add(checkboxMPLSIP1);
+					
+					textForwardingVRF1 = new JTextField();
+					textForwardingVRF1.setText("None");
+					textForwardingVRF1.setBounds(461, 245, 114, 22);
+					jp1.add(textForwardingVRF1);
+					textForwardingVRF1.setColumns(10);
 						
 						textIP2 = new JTextField();
 						textIP2.setText("None");
@@ -336,7 +338,7 @@ public class CMpls extends JDialog {
 						jp1.add(textMask2);
 						
 						checkboxMPLSIP2 = new JCheckBox("");
-						checkboxMPLSIP2.setBounds(400, 276, 45, 23);
+						checkboxMPLSIP2.setBounds(401, 279, 45, 23);
 						jp1.add(checkboxMPLSIP2);
 						
 						textForwardingVRF2 = new JTextField();
@@ -358,7 +360,7 @@ public class CMpls extends JDialog {
 						jp1.add(textMask3);
 						
 						checkboxMPLSIP3 = new JCheckBox("");
-						checkboxMPLSIP3.setBounds(400, 311, 45, 23);
+						checkboxMPLSIP3.setBounds(401, 314, 45, 23);
 						jp1.add(checkboxMPLSIP3);
 						
 						textForwardingVRF3 = new JTextField();
@@ -380,7 +382,7 @@ public class CMpls extends JDialog {
 						jp1.add(textMask4);
 						
 						checkboxMPLSIP4 = new JCheckBox("");
-						checkboxMPLSIP4.setBounds(400, 342, 45, 23);
+						checkboxMPLSIP4.setBounds(401, 345, 45, 23);
 						jp1.add(checkboxMPLSIP4);
 						
 						textForwardingVRF4 = new JTextField();
@@ -463,97 +465,74 @@ public class CMpls extends JDialog {
 		jp1.add(btnNewButton);
 		
 		JLabel lblAs = new JLabel("AS");
-		lblAs.setBounds(252, 144, 37, 17);
+		lblAs.setBounds(252, 144, 37, 23);
 		jp1.add(lblAs);
 		
 		neighborAS = new JTextField();
-		neighborAS.setBounds(275, 141, 65, 22);
+		neighborAS.setBounds(275, 144, 65, 22);
 		jp1.add(neighborAS);
 		neighborAS.setColumns(10);
 		
 		JLabel lblVecinoBgp = new JLabel("Vecino BGP");
-		lblVecinoBgp.setBounds(355, 144, 89, 17);
+		lblVecinoBgp.setBounds(355, 144, 89, 23);
 		jp1.add(lblVecinoBgp);
 		
 		neighborIP = new JTextField();
-		neighborIP.setBounds(453, 141, 140, 22);
+		neighborIP.setBounds(459, 144, 140, 22);
 		jp1.add(neighborIP);
 		neighborIP.setColumns(10);
 		
-		JLabel label = new JLabel("AS");
-		label.setBounds(252, 171, 37, 17);
-		jp1.add(label);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(275, 168, 65, 22);
-		jp1.add(textField_2);
-		
-		JLabel label_1 = new JLabel("Vecino EIGRP");
-		label_1.setBounds(355, 171, 89, 17);
-		jp1.add(label_1);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(453, 168, 140, 22);
-		jp1.add(textField_3);
-		
 		label_2 = new JLabel("Rutas BGP/EIGRP");
-		label_2.setBounds(321, 397, 133, 15);
+		label_2.setBounds(321, 400, 133, 15);
 		jp1.add(label_2);
 		
 		label_3 = new JLabel("Mascara");
-		label_3.setBounds(466, 397, 70, 15);
+		label_3.setBounds(466, 400, 70, 15);
 		jp1.add(label_3);
 		
-		button = new JButton("+");
-		button.addActionListener(new ActionListener() {
+		buttonAddRutas_Mask_Dinamic = new JButton("+");
+		buttonAddRutas_Mask_Dinamic.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO codigo para generar botones de rutas BGP / EIGRP
+				if (countDinamic < 5) {
+					//llamo a los metodos que agregara dinamicamente los campos para insercion de las rutas
+					addroutemaskdinamic(jp1,y_dinamic,countDinamic); 
+					addroutedinamic(jp1,y_dinamic,countDinamic);
+					
+					//incremento contadores de posicion en array y ventana
+					countDinamic++;
+					y_dinamic=y_dinamic+30;
+				} 
+				else {
+				mensajelimiterutas.setText("Solo se permite un maximo de 5 rutas (Estaticas/Dinamicas) por envio de configuracion...");
 				
+				}	
 				
 				
 			}
 		});
-		button.setBounds(555, 393, 44, 22);
-		jp1.add(button);
+		buttonAddRutas_Mask_Dinamic.setBounds(555, 396, 44, 22);
+		jp1.add(buttonAddRutas_Mask_Dinamic);
 		
 		buttonAddRutas_Mask.addActionListener(new ActionListener() {
-		
-
-		
-
-			public void actionPerformed(ActionEvent e) {
-				
-			
-				//establesco un maximo de 5 rutas								
+				public void actionPerformed(ActionEvent e) {
+					//establesco un maximo de 5 rutas								
 				if (count < 5) {
 					//llamo a los metodos que agregara dinamicamente los campos para insercion de las rutas
-					addroute(jp1,y,count); 
-					addroutemask(jp1,y,count);
+					addroutestatic(jp1,y,count); 
+					addroutemaskstatic(jp1,y,count);
 					
 					//incremento contadores de posicion en array y ventana
 					count++;
 					y=y+30;
-					
-					
 				} 
-				
-	
 				else {
-					
-				mensajelimiterutas.setText("Solo se permite un maximo de 5 rutas por envio de configuracion...");
-					
+				mensajelimiterutas.setText("Solo se permite un maximo de 5 rutas (Estaticas/Dinamicas) por envio de configuracion...");
+				
 				}	
-				
-				
-				
 			}//action performed boton mas para agregar rutas ok
-
-	
-
-			
 		});
+
 		//Panel 2 Routing Protocols	
 		JPanel jp2 = new JPanel(null);
 		tabbedPane.addTab("Monitoring Network",null,jp2,"segundo panel");
@@ -563,18 +542,17 @@ public class CMpls extends JDialog {
 		
 		
 		
-		//chequeos de los listeners para saber que se esta seleccionando al instanciar objeto CMpls
-				this.checkActiveDeviceCPE();
-				//this.checkActiveCheckVrf();
-				this.checkActiveDevicePE();
-				this.checkActiveDeviceP();
-				this.checkActiveCheckBGP();
-				this.checkActiveCheckEigrp();
-				this.checkActiveCheckMpls();
-				this.checkOverlapingInterface();
+//chequeos de los listeners para saber que se esta seleccionando al instanciar objeto CMpls
+this.checkActiveDeviceCPE();
+this.checkActiveDevicePE();
+this.checkActiveDeviceP();
+this.checkActiveCheckBGP();
+this.checkActiveCheckEigrp();
+this.checkActiveCheckMpls();
+this.checkOverlapingInterface();
 				
 
-	}// final constructor CMPLS()
+}// final constructor CMPLS()
 		
 		
 		private void botonesCancel_Enviar(JPanel jpGeneric) {
@@ -651,6 +629,7 @@ public class CMpls extends JDialog {
 			configResultView.append(c1.listMPLS());
 			configResultView.append(c1.listBGP());
 			configResultView.append(c1.listEIGRP());
+			configResultView.append(c1.routes());
 			
 			c1.listConfig();
 			
@@ -719,31 +698,42 @@ public class CMpls extends JDialog {
 		
 		
 		
-	public String addroute(JPanel jpgeneric, int y, int count) {
-		
+	public String addroutestatic(JPanel jpgeneric, int y, int count) {
 			rutas[count]= new JTextField("ruta");
 			rutas[count].setVisible(true);
 			rutas[count].setBounds(10, y, 135, 22);
 			rutas[count].validate();
-
 		    jpgeneric.add(rutas[count]);
-		    
 		    return rutas[count].getText();
-		    
-	
 	}
 
 
-	public String addroutemask(JPanel jpgeneric, int y, int count) {
+	public String addroutemaskstatic(JPanel jpgeneric, int y, int count) {
 			mascara[count]  = new JTextField("mascara");
 			mascara[count].setVisible(true);
 			mascara[count].setBounds(151, y,135 , 22);
 		    jpgeneric.add(mascara[count]);
 		    return mascara[count].getText();
-	
 	}
 	
-	
+	public String addroutedinamic(JPanel jpgeneric, int y, int count) {
+		rutasdinamic[count]= new JTextField("ruta dinamica");
+		rutasdinamic[count].setVisible(true);
+		rutasdinamic[count].setBounds(321, y, 135, 22);
+		rutasdinamic[count].validate();
+	    jpgeneric.add(rutasdinamic[count]);
+	    return rutasdinamic[count].getText();
+}
+
+
+public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
+		mascaradinamic[count]  = new JTextField("mascara");
+		mascaradinamic[count].setVisible(true);
+		mascaradinamic[count].setBounds(461, y,135 , 22);
+	    jpgeneric.add(mascaradinamic[count]);
+	    return mascaradinamic[count].getText();
+}
+
 	
 
 
@@ -932,7 +922,10 @@ public class CMpls extends JDialog {
 				checkboxPE.setEnabled(false);
 				checkboxActiveCEF.setEnabled(true);
 				checkboxActiveMpls.setEnabled(false);
+							
 				desactiveVRF();
+				desactiveVrfForwarding();
+				desactiveMplsIP();
 				activeCPEFlag=true;
 				
 			}
@@ -941,6 +934,8 @@ public class CMpls extends JDialog {
 				checkboxPE.setEnabled(true);
 				checkboxActiveMpls.setEnabled(false);
 				desactiveVRF();
+				desactiveVrfForwarding();
+				desactiveMplsIP();
 				activeCPEFlag = false;
 
 			}
@@ -964,6 +959,10 @@ public class CMpls extends JDialog {
 				checkboxP.setEnabled(false);
 				checkboxActiveMpls.setEnabled(true);
 				activePEFlag=true;
+				activeVRF();
+				desactiveMplsIP();
+				activeVrfForwarding();
+				
 			}
 			if (checkboxPE.isSelected() == false) {
 				checkboxCPE.setEnabled(true);
@@ -971,6 +970,7 @@ public class CMpls extends JDialog {
 				checkboxActiveMpls.setEnabled(false);
 				checkboxActiveMpls.setSelected(false);
 				desactiveVRF();
+				desactiveMplsIP();
 				activePEFlag=false;
 			}
 		}
@@ -994,6 +994,9 @@ public class CMpls extends JDialog {
 				checkboxPE.setEnabled(false);
 				checkboxActiveMpls.setEnabled(true);
 				activePFlag=true;
+				activeMplsIP();
+				desactiveVRF();
+				desactiveVrfForwarding();
 			}
 			if (checkboxP.isSelected() == false) {
 				checkboxCPE.setEnabled(true);
@@ -1001,6 +1004,7 @@ public class CMpls extends JDialog {
 				checkboxActiveMpls.setEnabled(false);
 				checkboxActiveMpls.setSelected(false);
 				desactiveVRF();
+				desactiveVrfForwarding();
 				activePFlag=false;
 			}
 		}
@@ -1151,27 +1155,71 @@ public class CMpls extends JDialog {
 		checkboxVrf.setEnabled(false);
 		 checkboxVrf.setSelected(false);
 		 textFieldvrf.setEditable(false);
+		 textFieldvrf.setEnabled(false);
 		 checkboxRD.setEnabled(false);
 		 checkboxRD.setSelected(false);
 		 textFieldRD.setEditable(false);
+		 textFieldRD.setEnabled(false);
 		 checkboxRT.setEnabled(false);
 		 checkboxRT.setSelected(false);
 		 textFieldRT.setEditable(false);
+		 textFieldRT.setEnabled(false);
 	}
 
 	public void activeVRF() {
 		checkboxVrf.setEnabled(true);
 		 checkboxVrf.setSelected(true);
 		 textFieldvrf.setEditable(true);
+		 textFieldvrf.setEnabled(true);
 		 checkboxRD.setEnabled(true);
 		 checkboxRD.setSelected(true);
 		 textFieldRD.setEditable(true);
+		 textFieldRD.setEnabled(true);
 		 checkboxRT.setEnabled(true);
 		 checkboxRT.setSelected(true);
 		 textFieldRT.setEditable(true);
+		 textFieldRT.setEnabled(true);
+	}
+
+	public void activeVrfForwarding() {
+		textForwardingVRF1.setEditable(true);
+		textForwardingVRF2.setEditable(true);
+		textForwardingVRF3.setEditable(true);
+		textForwardingVRF4.setEditable(true);
+		textForwardingVRF1.setEnabled(true);
+		textForwardingVRF2.setEnabled(true);
+		textForwardingVRF3.setEnabled(true);
+		textForwardingVRF4.setEnabled(true);
 	}
 
 
+	public void activeMplsIP() {
+		checkboxMPLSIP1.setEnabled(true);
+		checkboxMPLSIP2.setEnabled(true);
+		checkboxMPLSIP3.setEnabled(true);
+		checkboxMPLSIP4.setEnabled(true);
+	}
+
+	public void desactiveVrfForwarding() {
+		textForwardingVRF1.setEditable(false);
+		textForwardingVRF2.setEditable(false);
+		textForwardingVRF3.setEditable(false);
+		textForwardingVRF4.setEditable(false);
+		textForwardingVRF1.setEnabled(false);
+		textForwardingVRF2.setEnabled(false);
+		textForwardingVRF3.setEnabled(false);
+		textForwardingVRF4.setEnabled(false);
+	}
+
+
+	public void desactiveMplsIP() {
+		checkboxMPLSIP1.setEnabled(false);
+		checkboxMPLSIP2.setEnabled(false);
+		checkboxMPLSIP3.setEnabled(false);
+		checkboxMPLSIP4.setEnabled(false);
+	}
+	
+	
 	public void parametrosconex(String ipp, String puertop, String comunityp,String usuariop, String passwordp) {
 		// se setean las variable de conexion snmp
 		ip=ipp;

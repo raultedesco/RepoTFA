@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -149,7 +150,7 @@ public class Login extends JFrame {
 		password.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("/home/raul/Imágenes/demo-console-of-fortigate-and-fortianalyzer-fortinet.gif"));
+		lblNewLabel.setIcon(new ImageIcon("/home/raul/Imágenes/MPLS.png"));
 		lblNewLabel.setBounds(223, 185, 213, 70);
 		contentPane.add(lblNewLabel);
 	}

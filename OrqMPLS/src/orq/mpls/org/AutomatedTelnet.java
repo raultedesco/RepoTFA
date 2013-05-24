@@ -153,7 +153,7 @@ public void cinterface(CurrentConfig c1, int index ) {
 	this.sendCommand(backroot());
 }
 
-public void cbgp(CurrentConfig c1){
+public void cbgpMPLS(CurrentConfig c1){
 	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
 	//ejemplo config pe bgp dos vrf
 //	!
@@ -176,18 +176,41 @@ public void cbgp(CurrentConfig c1){
 //	  no synchronization
 //	 exit-address-family
 //	 !
-//	 address-family ipv4 vrf A
-//	  redistribute connected
-//	  neighbor 192.168.19.2 remote-as 101
-//	  neighbor 192.168.19.2 activate
-//	  no synchronization
-//	 exit-address-family
-//	!
+
 	
 	String cbgp="router bgp " + c1.getBgpProcess();
-	String cvecino="neighbor " +c1.getBgpNeighbor() +" remote-as ";
+	String cvecino="neighbor " +c1.getBgpNeighbor() +" remote-as " +c1.getBgpRemoteAs();
+	String cvecinoA="neighbor " +c1.getBgpNeighbor() +" activate";
+	String caddressfamily ="address-family ipv4 vrf " + c1.getVrfname();
+	String cvecinoI="neighbor " +c1.getBgpNeighbor() +" remote-as " +c1.getBgpRemoteAs();
 	this.sendCommand(cbgp);
+	this.sendCommand(cvecino);
+	this.sendCommand(cvecinoA);
+	this.sendCommand(caddressfamily);
+	this.sendCommand(cvecinoI);
+	this.sendCommand(backroot());
 	
+	
+}
+
+public void cbgp(CurrentConfig c2){
+	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
+	
+	String cbgp="router bgp " + c2.getBgpProcess();
+	String cvecino="neighbor " +c2.getBgpNeighbor() +" remote-as " +c2.getBgpRemoteAs();
+
+	this.sendCommand(cbgp);
+	this.sendCommand(cvecino);
+	this.sendCommand(backroot());
+	
+	
+}
+
+public void ceigrp(CurrentConfig c2){
+	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
+	
+	String cbgp="router eigrp " + c2.getBgpProcess();
+	this.sendCommand(cbgp);
 	this.sendCommand(backroot());
 	
 	

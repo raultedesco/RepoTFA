@@ -220,6 +220,10 @@ public String getBgpRemoteAs() {
 public void setBgpRemoteAs(String bgpRemoteAs) {
 	this.bgpRemoteAs = bgpRemoteAs;
 }
+public String routes() {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 
 
