@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class CurrentConfig {
 
+private boolean ifCpe;
+private boolean ifPe;
+private boolean ifP;
 private String vrfname;
 private String vrfrd;
 private String vrfrt;
@@ -245,6 +248,27 @@ public String [] getMascarasdinamic() {
 }
 public void setMascarasdinamic(String [] mascarasdinamic) {
 	this.mascarasdinamic = mascarasdinamic;
+}
+public boolean isIfCpe() {
+	return ifCpe;
+}
+public void setIfCpe(boolean ifCpe) {
+	this.ifCpe = ifCpe;
+}
+public boolean isIfPe() {
+	return ifPe;
+}
+public void setIfPe(boolean ifPe) {
+	this.ifPe = ifPe;
+}
+public boolean isIfP() {
+	return ifP;
+}
+public void setIfP(boolean ifP) {
+	this.ifP = ifP;
+}
+public ArrayList<String> getInterfaces() {
+	return interfaces;
 }
 
 }

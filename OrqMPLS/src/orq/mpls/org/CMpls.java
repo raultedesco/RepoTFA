@@ -564,7 +564,7 @@ this.checkActiveCheckMpls();
 this.checkOverlapingInterface();
 				
 
-}// final constructor CMPLS()
+}// Final Constructor CMPLS
 		
 		
 		private void botonesCancel_Enviar(JPanel jpGeneric) {
@@ -572,15 +572,7 @@ this.checkOverlapingInterface();
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setcurrentconfigvalues();
-						
-				
-			
-			
-			
-			
-			
-			
-						
+							
 			}
 
 
@@ -610,8 +602,9 @@ this.checkOverlapingInterface();
 //fin botones canel_enviar
 	
 		public void setcurrentconfigvalues() {
-			
-			
+			c1.setIfCpe(activeCPEFlag);
+			c1.setIfPe(activePEFlag);
+			c1.setIfP(activePFlag);
 			
 			if (activeCEFFlag) {
 				c1.setCefboolean(true);
@@ -901,10 +894,6 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 		return activeCEFFlag;
 	}
 	 
-	 
-	 
-	 
-	 
 	 public boolean  checkActiveCheckMpls() {
 		 ItemListener itemlistener = new ItemListener() {
 			
@@ -912,12 +901,12 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 			public void itemStateChanged(ItemEvent e) {
 				
 				 if (checkboxActiveMpls.isSelected()) {
-					 activeVRF();
+					 activeVRF(true);
 					 activeMplsFlag = true;
 					 ;
 				}
 				 if (checkboxActiveMpls.isSelected() == false) {
-					 desactiveVRF();
+					 activeVRF(false);
 					 activeMplsFlag = false;
 					
 				}			}
@@ -929,18 +918,6 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 	}
 	 
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	
-	 
-	 
-	 
-	 
-	 
 	 public void  checkActiveCheckVrf() {
 		 ItemListener itemlistener = new ItemListener() {
 			
@@ -948,11 +925,11 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 			public void itemStateChanged(ItemEvent e) {
 				
 				 if (checkboxVrf.isSelected()) {
-					 activeVRF();
+					 activeVRF(true);
 					
 				}
 				 if (checkboxVrf.isSelected() == false) {
-					desactiveVRF();
+					activeVRF(false);
 					
 				}			}
 		};
@@ -975,9 +952,9 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxActiveMpls.setEnabled(false);
 				activeMplsFlag=false;
 							
-				desactiveVRF();
-				desactiveVrfForwarding();
-				desactiveMplsIP();
+				activeVRF(false);
+				activeVrfForwarding(false);
+				activeMplsIP(false);
 				activeCPEFlag=true;
 				
 			}
@@ -985,9 +962,9 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxP.setEnabled(true);
 				checkboxPE.setEnabled(true);
 				checkboxActiveMpls.setEnabled(false);
-				desactiveVRF();
-				desactiveVrfForwarding();
-				desactiveMplsIP();
+				activeVRF(false);
+				activeVrfForwarding(false);
+				activeMplsIP(false);
 				activeCPEFlag = false;
 				activeMplsFlag=false;
 
@@ -1014,9 +991,9 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxActiveMpls.setSelected(true);
 				activeMplsFlag=true;
 				activePEFlag=true;
-				activeVRF();
-				desactiveMplsIP();
-				activeVrfForwarding();
+				activeVRF(true);
+				activeMplsIP(false);
+				activeVrfForwarding(true);
 				
 			}
 			if (checkboxPE.isSelected() == false) {
@@ -1024,8 +1001,8 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxP.setEnabled(true);
 				checkboxActiveMpls.setEnabled(false);
 				checkboxActiveMpls.setSelected(false);
-				desactiveVRF();
-				desactiveMplsIP();
+				activeVRF(false);
+				activeMplsIP(false);
 				activePEFlag=false;
 				activeMplsFlag=false;
 			}
@@ -1051,9 +1028,9 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxActiveMpls.setEnabled(true);
 				checkboxActiveMpls.setSelected(true);
 				activePFlag=true;
-				activeMplsIP();
-				desactiveVRF();
-				desactiveVrfForwarding();
+				activeMplsIP(true);
+				activeVRF(false);
+				activeVrfForwarding(false);
 				activeMplsFlag=true;
 			}
 			if (checkboxP.isSelected() == false) {
@@ -1061,8 +1038,8 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 				checkboxPE.setEnabled(true);
 				checkboxActiveMpls.setEnabled(false);
 				checkboxActiveMpls.setSelected(false);
-				desactiveVRF();
-				desactiveVrfForwarding();
+				activeVRF(false);
+				activeVrfForwarding(false);
 				activePFlag=false;
 				activeMplsFlag=false;
 			}
@@ -1210,75 +1187,41 @@ public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
 
 
 
-	public void desactiveVRF() {
-		checkboxVrf.setEnabled(false);
-		 checkboxVrf.setSelected(false);
-		 textFieldvrf.setEditable(false);
-		 textFieldvrf.setEnabled(false);
-		 checkboxRD.setEnabled(false);
-		 checkboxRD.setSelected(false);
-		 textFieldRD.setEditable(false);
-		 textFieldRD.setEnabled(false);
-		 checkboxRT.setEnabled(false);
-		 checkboxRT.setSelected(false);
-		 textFieldRT.setEditable(false);
-		 textFieldRT.setEnabled(false);
+	public void activeVRF(boolean estado) {
+		checkboxVrf.setEnabled(estado);
+		 checkboxVrf.setSelected(estado);
+		 textFieldvrf.setEditable(estado);
+		 textFieldvrf.setEnabled(estado);
+		 checkboxRD.setEnabled(estado);
+		 checkboxRD.setSelected(estado);
+		 textFieldRD.setEditable(estado);
+		 textFieldRD.setEnabled(estado);
+		 checkboxRT.setEnabled(estado);
+		 checkboxRT.setSelected(estado);
+		 textFieldRT.setEditable(estado);
+		 textFieldRT.setEnabled(estado);
 	}
 
-	public void activeVRF() {
-		checkboxVrf.setEnabled(true);
-		 checkboxVrf.setSelected(true);
-		 textFieldvrf.setEditable(true);
-		 textFieldvrf.setEnabled(true);
-		 checkboxRD.setEnabled(true);
-		 checkboxRD.setSelected(true);
-		 textFieldRD.setEditable(true);
-		 textFieldRD.setEnabled(true);
-		 checkboxRT.setEnabled(true);
-		 checkboxRT.setSelected(true);
-		 textFieldRT.setEditable(true);
-		 textFieldRT.setEnabled(true);
-	}
-
-	public void activeVrfForwarding() {
-		textForwardingVRF1.setEditable(true);
-		textForwardingVRF2.setEditable(true);
-		textForwardingVRF3.setEditable(true);
-		textForwardingVRF4.setEditable(true);
-		textForwardingVRF1.setEnabled(true);
-		textForwardingVRF2.setEnabled(true);
-		textForwardingVRF3.setEnabled(true);
-		textForwardingVRF4.setEnabled(true);
+	public void activeVrfForwarding(boolean estado) {
+		textForwardingVRF1.setEditable(estado);
+		textForwardingVRF2.setEditable(estado);
+		textForwardingVRF3.setEditable(estado);
+		textForwardingVRF4.setEditable(estado);
+		textForwardingVRF1.setEnabled(estado);
+		textForwardingVRF2.setEnabled(estado);
+		textForwardingVRF3.setEnabled(estado);
+		textForwardingVRF4.setEnabled(estado);
 	}
 
 
-	public void activeMplsIP() {
-		checkboxMPLSIP1.setEnabled(true);
-		checkboxMPLSIP2.setEnabled(true);
-		checkboxMPLSIP3.setEnabled(true);
-		checkboxMPLSIP4.setEnabled(true);
+	public void activeMplsIP(boolean estado) {
+		checkboxMPLSIP1.setEnabled(estado);
+		checkboxMPLSIP2.setEnabled(estado);
+		checkboxMPLSIP3.setEnabled(estado);
+		checkboxMPLSIP4.setEnabled(estado);
 	}
 
-	public void desactiveVrfForwarding() {
-		textForwardingVRF1.setEditable(false);
-		textForwardingVRF2.setEditable(false);
-		textForwardingVRF3.setEditable(false);
-		textForwardingVRF4.setEditable(false);
-		textForwardingVRF1.setEnabled(false);
-		textForwardingVRF2.setEnabled(false);
-		textForwardingVRF3.setEnabled(false);
-		textForwardingVRF4.setEnabled(false);
-	}
-
-
-	public void desactiveMplsIP() {
-		checkboxMPLSIP1.setEnabled(false);
-		checkboxMPLSIP2.setEnabled(false);
-		checkboxMPLSIP3.setEnabled(false);
-		checkboxMPLSIP4.setEnabled(false);
-	}
-	
-	
+		
 	public void parametrosconex(String ipp, String puertop, String comunityp,String usuariop, String passwordp) {
 		// se setean las variable de conexion snmp
 		ip=ipp;
