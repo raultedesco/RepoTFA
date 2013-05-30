@@ -150,7 +150,7 @@ public String cvrf(CurrentConfig c1){
 }
 public void cinterface(CurrentConfig c1, int index ) {
 	// TODO chequear metodo de configuracion de ip
-	String cinterface ="interface " + c1.getInterfaces(index);
+	String cinterface ="interface " + c1.getInterfacesNames(index);
 	String cip = "ip address " + c1.getIpsInterfaces()[index] + "" + c1.getMasksInterfaces()[index];
 	this.sendCommand(cinterface);
 	this.sendCommand(cip);
@@ -159,29 +159,7 @@ public void cinterface(CurrentConfig c1, int index ) {
 
 public void cbgpMPLS(CurrentConfig c1){
 	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
-	//ejemplo config pe bgp dos vrf
-//	!
-//	router bgp 1
-//	 no synchronization
-//	 bgp log-neighbor-changes
-//	 neighbor 2.2.2.2 remote-as 1
-//	 neighbor 2.2.2.2 update-source Loopback0
-//	 neighbor 192.168.19.2 remote-as 101
-//	 no auto-summary
-//	 !
-//	 address-family vpnv4
-//	  neighbor 2.2.2.2 activate
-//	  neighbor 2.2.2.2 send-community extended
-//	 exit-address-family
-//	 !
-//	 address-family ipv4 vrf B
-//	  neighbor 192.168.18.2 remote-as 99
-//	  neighbor 192.168.18.2 activate
-//	  no synchronization
-//	 exit-address-family
-//	 !
 
-	
 	String cbgp="router bgp " + c1.getBgpProcess();
 	String cvecino="neighbor " +c1.getBgpNeighbor() +" remote-as " +c1.getBgpRemoteAs();
 	String cvecinoA="neighbor " +c1.getBgpNeighbor() +" activate";
@@ -197,17 +175,33 @@ public void cbgpMPLS(CurrentConfig c1){
 	
 }
 
-public void cbgp(CurrentConfig c2){
+public void cbgp(CurrentConfig c1){
 	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
 	
-	String cbgp="router bgp " + c2.getBgpProcess();
-	String cvecino="neighbor " +c2.getBgpNeighbor() +" remote-as " +c2.getBgpRemoteAs();
+	String cbgp="router bgp " + c1.getBgpProcess();
+	String cvecino="neighbor " +c1.getBgpNeighbor() +" remote-as " +c1.getBgpRemoteAs();
 
 	this.sendCommand(cbgp);
 	this.sendCommand(cvecino);
 	this.sendCommand(backroot());
 	
 	
+}
+public void crutaEstatica(CurrentConfig c1) {
+	// TODO Metodo crutaEstatica terminar
+	
+	for (int i = 0; i < 5; i++) {
+		String crutaEstatica="ip route " ;
+		this.sendCommand(crutaEstatica);
+	}
+	
+
+}
+
+public void crutaDinamica() {
+	// TODO Metodo crutaDinamica
+
+
 }
 
 public void ceigrp(CurrentConfig c2){
