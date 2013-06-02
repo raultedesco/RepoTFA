@@ -128,11 +128,13 @@ e.printStackTrace();
 return callback;
 }
 
-public static String backroot() {
+public String backroot() {
 //	char c= 26;
 //	return Character.toString(c);
+	String resul;
 	String end ="end";
-	return end;
+	resul=this.sendCommand(end);
+	return resul;
 }
 
 public String cvrf(CurrentConfig c1){
@@ -143,7 +145,6 @@ public String cvrf(CurrentConfig c1){
 	resul = resul + this.sendCommand(crd);
 	String crt="route-target " + c1.getVrfrt();
 	resul = resul + this.sendCommand(crt);
-	resul = resul + this.sendCommand(backroot());
 	return resul;
 	
 	
@@ -154,7 +155,7 @@ public void cinterface(CurrentConfig c1, int index ) {
 	String cip = "ip address " + c1.getIpsInterfaces()[index] + "" + c1.getMasksInterfaces()[index];
 	this.sendCommand(cinterface);
 	this.sendCommand(cip);
-	this.sendCommand(backroot());
+
 }
 
 public void cbgpMPLS(CurrentConfig c1){
@@ -170,21 +171,21 @@ public void cbgpMPLS(CurrentConfig c1){
 	this.sendCommand(cvecinoA);
 	this.sendCommand(caddressfamily);
 	this.sendCommand(cvecinoI);
-	this.sendCommand(backroot());
+
 	
 	
 }
 
-public void cbgp(CurrentConfig c1){
+public String cbgp(CurrentConfig c1){
 	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
 	
+	String resul;
 	String cbgp="router bgp " + c1.getBgpProcess();
 	String cvecino="neighbor " +c1.getBgpNeighbor() +" remote-as " +c1.getBgpRemoteAs();
 
-	this.sendCommand(cbgp);
-	this.sendCommand(cvecino);
-	this.sendCommand(backroot());
-	
+	resul=this.sendCommand(cbgp);
+	resul=resul+this.sendCommand(cvecino);
+	return resul;
 	
 }
 public void crutaEstatica(CurrentConfig c1) {
@@ -209,14 +210,23 @@ public void ceigrp(CurrentConfig c2){
 	
 	String cbgp="router eigrp " + c2.getBgpProcess();
 	this.sendCommand(cbgp);
-	this.sendCommand(backroot());
 	
 	
 }
-private void changeprompt() {
-	// TODO generar un configurador de prompt
-	
+public String ccef() {
+	String resul;
+	String ccef = "ip cef";
+	resul=this.sendCommand(ccef);
+	return resul;
 }
+
+public String cmplsip() {
+	String resul;
+	String cmplsip = "mpls ip";
+	resul=this.sendCommand(cmplsip);
+	return resul;
+}
+
 public void savetofile() {
 	//TODO Generar metodo para guardar en archivo
 }

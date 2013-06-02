@@ -6,12 +6,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.UIManager;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -31,11 +31,12 @@ public class CMpls extends JDialog {
 	private String usuario;
 	private String password;
 	
-	private JTextField rutascompletas[][] = new JTextField[5][4];
+	private JTextField rutasEstaticascompletas[][] = new JTextField[5][4];
+	private JTextField rutasDinamicasCompletas[][] =new JTextField[5][2];
 	
 	
 	//TODO descomentar esta linea para generar objeto que hable SNMP
-	//private SNMPUtils con1 = new SNMPUtils();
+	private SNMPUtils con1 = new SNMPUtils();
 	
 	private JTextField textFieldProcesoBGP;
 	private JCheckBox checkboxActiveBGP;
@@ -54,14 +55,9 @@ public class CMpls extends JDialog {
 	private JTextField textFieldRD;
 	private JTextField textFieldRT;
 	private int countestatic = 0;
+	private int countDinamic = 0;
 	private int y=430;
-	private int x=10;
-	private int countDinamic=0;
 	private int y_dinamic=430;
-	private JTextField []rutas = new JTextField[5]; 
-	private JTextField [] mascara= new JTextField[5]; 	
-	private JTextField []rutasdinamic = new JTextField[5]; 
-	private JTextField [] mascaradinamic= new JTextField[5]; 	
 	private JCheckBox checkboxRT;
 	private JCheckBox checkboxRD;
 	private JTextArea configResultView;
@@ -86,13 +82,13 @@ public class CMpls extends JDialog {
 	private JCheckBox checkboxMPLSIP3;
 	private JCheckBox checkboxMPLSIP4;
 
-	private JComboBox comboBoxInterface1;
+	private JComboBox<?> comboBoxInterface1;
 
-	private JComboBox comboBoxInterface2;
+	private JComboBox<?> comboBoxInterface2;
 
-	private JComboBox comboBoxInterface3;
+	private JComboBox<?> comboBoxInterface3;
 
-	private JComboBox comboBoxInterface4;
+	private JComboBox<?> comboBoxInterface4;
 
 	private ArrayList<String> interfacesbysnmp;
 	private JTextField neighborAS;
@@ -127,7 +123,7 @@ public class CMpls extends JDialog {
 		
 		
 		setBounds(100, 100, 450, 300);
-		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		//con esta linea se hace que cuando la ventana es instanciada esta se inicie maximizada
 		this.setSize(this.getToolkit().getScreenSize());  
@@ -139,12 +135,17 @@ public class CMpls extends JDialog {
 		
 		interfacesbysnmp = new ArrayList<>();
 				try {
+
 					//TODO descomentar esta linea para generar objeto que hable SNMP
-					//interfacesbysnmp = con1.printInterface();
+					interfacesbysnmp = con1.printInterface();
 					interfacesbysnmp.add("None");
 							} catch (Exception e2) {//cambiar por IOException
 					
-					e2.printStackTrace();
+								JOptionPane message = new JOptionPane();
+								message.showMessageDialog(this,"No se registro Conexion SNMP","Mensaje SNMP",JOptionPane.INFORMATION_MESSAGE);
+								// TODO descomentar esta linea si quiero ver el contenido de la Exepcion
+								//e2.printStackTrace();
+			
 				}
 		
 		
@@ -433,6 +434,7 @@ public class CMpls extends JDialog {
 
 		comboBoxInterface1 = new JComboBox();
 		comboBoxInterface1.setEnabled(true);
+		comboBoxInterface1.setEditable(true);
 		comboBoxInterface1.setToolTipText("Interfaces Equipo");
 		comboBoxInterface1.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
 		comboBoxInterface1.setBounds(10, 246, 133, 22);
@@ -440,24 +442,27 @@ public class CMpls extends JDialog {
 		
 				comboBoxInterface2 = new JComboBox();
 				comboBoxInterface2.setEnabled(true);
+				comboBoxInterface2.setEditable(true);
 				comboBoxInterface2.setToolTipText("Interfaces Equipo");
 				comboBoxInterface2.removeAllItems();
-				//comboBoxInterface2.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+				comboBoxInterface2.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
 				comboBoxInterface2.setBounds(10, 280, 133, 22);
 				jp1.add(comboBoxInterface2);
 				
 				comboBoxInterface3 = new JComboBox();
 				comboBoxInterface3.setEnabled(true);
+				comboBoxInterface3.setEditable(true);
 				comboBoxInterface3.setToolTipText("Interfaces Equipo");
 				comboBoxInterface3.removeAllItems();
-				//comboBoxInterface3.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+				comboBoxInterface3.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
 				comboBoxInterface3.setBounds(10, 315, 133, 22);
 				jp1.add(comboBoxInterface3);
 				
 				comboBoxInterface4 = new JComboBox();
 				comboBoxInterface4.setEnabled(true);
+				comboBoxInterface4.setEditable(true);
 				comboBoxInterface4.setToolTipText("Interfaces Equipo");
-				//comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
+				comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
 				comboBoxInterface4.setBounds(10, 346, 133, 22);
 				jp1.add(comboBoxInterface4);
 				
@@ -466,12 +471,9 @@ public class CMpls extends JDialog {
 				JButton btnNewButton = new JButton("Enviar ");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						setcurrentconfigvalues();
-						AutomatedTelnet send = new AutomatedTelnet("192.168.80.110", "raul", "cisco");
-						configGenView.append(send.ena("cisco"));
-						configGenView.append(send.configmode());
-						configGenView.append(send.cvrf(c1));
-						send.disconnect();
+						SendCurrentConfig SConfig = new SendCurrentConfig(c1,configGenView);
+					
+						
 					}
 				});
 				btnNewButton.setBounds(920, 629, 114, 23);
@@ -536,9 +538,7 @@ public class CMpls extends JDialog {
 						// TODO codigo para generar botones de rutas BGP / EIGRP
 						if (countDinamic < 5) {
 							//llamo a los metodos que agregara dinamicamente los campos para insercion de las rutas
-							addroutemaskdinamic(jp1,y_dinamic,countDinamic); 
-							addroutedinamic(jp1,y_dinamic,countDinamic);
-							
+							addrutasDinamicas(jp1,y_dinamic,countDinamic);
 							//incremento contadores de posicion en array y ventana
 							countDinamic++;
 							y_dinamic=y_dinamic+30;
@@ -572,7 +572,6 @@ this.checkActiveDeviceP();
 this.checkActiveCheckBGP();
 this.checkActiveCheckEigrp();
 this.checkActiveCheckMpls();
-this.checkOverlapingInterface();
 				
 
 }// Final Constructor CMPLS
@@ -582,7 +581,6 @@ this.checkOverlapingInterface();
 			JButton btnEnviar = new JButton("Ver Config Generada");
 			btnEnviar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//setcurrentconfigvalues();
 					 saveCurrentConfig();
 				}
 
@@ -615,8 +613,8 @@ this.checkOverlapingInterface();
 	
 		protected void saveCurrentConfig() {
 			// TODO nuevo metodo save current configuration
-			//limpia el JTexArea cada vez que se apreta el boton ver parametros
-			configResultView.setText("");
+			
+			configResultView.setText("");//limpia el JTexArea cada vez que se apreta el boton ver parametros
 			c1.setCountestatic(countestatic);
 			c1.setCountdinamic(countDinamic);
 			c1.setIfCpe(checkboxCPE.isSelected());
@@ -624,6 +622,7 @@ this.checkOverlapingInterface();
 			c1.setIfP(checkboxP.isSelected());
 			c1.setCefboolean(checkboxActiveCEF.isSelected());
 			c1.setMplsipboolean(checkboxActiveMpls.isSelected());
+			c1.setVrfFlag(checkboxVrf.isSelected());
 			c1.setVrfname(textFieldvrf.getText());
 			c1.setVrfrd(textFieldRD.getText());
 			c1.setVrfrt(textFieldRT.getText());
@@ -634,17 +633,24 @@ this.checkOverlapingInterface();
 			c1.setEigrpflag(checkboxActiveEigrp.isSelected());
 			c1.setEigrpProcess(textFieldProcesoEigrp.getText());
 			
-			//Parte de Configuracion de las parte de mpls sobre las interfaces
+			//Parte de Configuracion de mpls sobre las interfaces
 			String ips[] = new String[4];
 			String masks[] = new String[4];
 			boolean mpslip[] = new boolean[4];
 			String forwardingVRF[] = new String[4];
 			
-			interfacesbysnmp.add(0, comboBoxInterface1.getSelectedItem().toString());
-			interfacesbysnmp.add(1, comboBoxInterface1.getSelectedItem().toString());		
-			interfacesbysnmp.add(2, comboBoxInterface1.getSelectedItem().toString());
-			interfacesbysnmp.add(3, comboBoxInterface1.getSelectedItem().toString());
+try {
+			interfacesbysnmp.clear();
+			checkcomboboxinterface(comboBoxInterface1,0);
+			checkcomboboxinterface(comboBoxInterface2,1);
+			checkcomboboxinterface(comboBoxInterface3,2);
+			checkcomboboxinterface(comboBoxInterface4,3);
 			c1.setInterfacesNames(interfacesbysnmp);
+			} catch (Exception e) {
+				// TODO: handle exception
+					
+
+			}
 			
 			ips[0] = textIP1.getText();
 			ips[1] = textIP2.getText();
@@ -670,56 +676,50 @@ this.checkOverlapingInterface();
 			forwardingVRF[3]=textForwardingVRF4.getText();
 			c1.setForwardingVRF(forwardingVRF);
 			
+			//Rutas Estaticas
 			String temprutasestaticas[][] = new String[countestatic][4];	
 			for (int i = 0; i < countestatic; i++) {
-				for (int j = 0; j < rutascompletas[i].length; j++) {
+				for (int j = 0; j < rutasEstaticascompletas[i].length; j++) {
 
-					temprutasestaticas[i][j]= rutascompletas[i][j].getText();
+					temprutasestaticas[i][j]= rutasEstaticascompletas[i][j].getText();
 					
 			}
 			}
 			c1.setRutasEstaticas(temprutasestaticas);
 
+			//Rutas Dinamicas
+			String temprutasdinamicas[][] = new String[countDinamic][2];	
+			for (int i = 0; i < countDinamic; i++) {
+				for (int j = 0; j < rutasDinamicasCompletas[i].length; j++) {
+
+					temprutasdinamicas[i][j]= rutasDinamicasCompletas[i][j].getText();
+					
+			}
+			}
+			c1.setRutasDinamicas(temprutasdinamicas);
+			
 			c1.showparameter(configResultView);
 
 		
 		}
 
 
-		public void setcurrentconfigvalues() {
-				
-					for (int i = 0; i < countDinamic; i++) {
-						//System.out.println("ruta:" + rutas[i].getText());
-						//System.out.println("mascara: " + mascara[i].getText());
-						//mover los valores del arreglo de jtexfield a una variable temporal de tipo String
-						String temprutas[] = new String[countDinamic];
-						String tempmascaras[] = new String[countDinamic];
-						//crear e inicializar arreglos temporales para las rutas y mascaras
-						String tempr= rutasdinamic[i].getText();
-						String tempm= mascaradinamic[i].getText();
-						//pasarles el valor de lo jtexfield correspondiente que estan contenidas en las variales temporales
-						temprutas[i]=tempr;
-						tempmascaras[i]=tempm;
-						//guardar los valores en el objeto configuracion para su almacenado en BD y posterior confeccion de logs
-						c1.setRutasdinamic(temprutas);
-						c1.setMascarasdinamic(tempmascaras);
-						configResultView.append("Ruta Dinamica:" + c1.getRutasdinamic()[i] + " Mascara:" + c1.getMascarasdinamic()[i]+"\n");
-					}
-					
-											
+public void checkcomboboxinterface(JComboBox<?> JComboBoxInterface,int index) {
+	if (JComboBoxInterface.getSelectedItem()!=null) {
+		interfacesbysnmp.add(index, JComboBoxInterface.getSelectedItem().toString());
+	}
+}
 
-}	
 
-		
 	
 	public String addrutasEstaticas(JPanel jpgeneric,int y, int countestatic){
-		x=10;
-				for (int c = 0; c < 4; c++) {
-				rutascompletas[countestatic][c] = new JTextField("none");
-				rutascompletas[countestatic][c].setVisible(true);
-				rutascompletas[countestatic][c].setBounds(x,y,114,22);
-				jpgeneric.add(rutascompletas[countestatic][c]);
-				x=x+120;
+		int xEstatic = 10;
+		for (int c = 0; c < 4; c++) {
+		rutasEstaticascompletas[countestatic][c] = new JTextField("none");
+		rutasEstaticascompletas[countestatic][c].setVisible(true);
+		rutasEstaticascompletas[countestatic][c].setBounds(xEstatic,y,114,22);
+		jpgeneric.add(rutasEstaticascompletas[countestatic][c]);
+		xEstatic=xEstatic+120;
 					
 		}
 
@@ -727,72 +727,19 @@ this.checkOverlapingInterface();
 		
 	}
 	
-
-
-
-	public String addroutedinamic(JPanel jpgeneric, int y, int count) {
-		rutasdinamic[count]= new JTextField("ruta dinamica");
-		rutasdinamic[count].setVisible(true);
-		rutasdinamic[count].setBounds(500, y, 114, 22);
-		rutasdinamic[count].validate();
-	    jpgeneric.add(rutasdinamic[count]);
-	    return rutasdinamic[count].getText();
-}
-
-
-public String addroutemaskdinamic(JPanel jpgeneric, int y, int count) {
-		mascaradinamic[count]  = new JTextField("mascara");
-		mascaradinamic[count].setVisible(true);
-		mascaradinamic[count].setBounds(620, y,114 , 22);
-	    jpgeneric.add(mascaradinamic[count]);
-	    return mascaradinamic[count].getText();
-}
-
-	
-
-
-		
-	public boolean  checkOverlapingInterface() {
-		ActionListener actionListener = new ActionListener() {
-			@Override
-			// TODO Reprogramar este metodo para que valide correctamente
-			public void actionPerformed(ActionEvent e) {// chequear la validacion
-				
-				
-				
-				
-				
-				if (comboBoxInterface1.getSelectedItem() == interfacesbysnmp.get(0)) {
-					interfacesbysnmp.remove(0);
-					comboBoxInterface2.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-					
-							}
-				if (comboBoxInterface2.getSelectedItem() == interfacesbysnmp.get(1-1)) {
-					interfacesbysnmp.remove(1);
-					comboBoxInterface3.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-					
-				}
-				if (comboBoxInterface3.getSelectedItem() == interfacesbysnmp.get(2-1)) {
-					interfacesbysnmp.remove(2);
-					comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-				}
-				if (comboBoxInterface4.getSelectedItem() == interfacesbysnmp.get(3-1)) {
-					//interfacesbysnmp.remove(3);
-					comboBoxInterface4.setModel(new DefaultComboBoxModel(interfacesbysnmp.toArray()));
-				}
-			}
-				
-			};
-		
-		comboBoxInterface1.addActionListener(actionListener);
-		comboBoxInterface2.addActionListener(actionListener);
-		comboBoxInterface3.addActionListener(actionListener);
-		comboBoxInterface4.addActionListener(actionListener);
-		boolean resultado = true;
-		return resultado ;
+	public String addrutasDinamicas(JPanel jpgeneric, int y, int count) {
+		int xDinamic = 500;
+		for (int c = 0; c < 2; c++) {
+		rutasDinamicasCompletas[count][c]= new JTextField("ruta dinamica");
+		rutasDinamicasCompletas[count][c].setVisible(true);
+		rutasDinamicasCompletas[count][c].setBounds(xDinamic, y, 114, 22);
+	    jpgeneric.add(rutasDinamicasCompletas[count][c]);
+	    xDinamic=xDinamic+120;
+		}
+		 return null;
 	}
 
-	
+
 	 public boolean  checkActiveCheckBGP() {
 		 ItemListener itemlistener = new ItemListener() {
 			

@@ -17,6 +17,7 @@ private boolean bgpFlag;
 private boolean eigrpFlag;
 private boolean cefFlag;
 private boolean mplsipGlobalFlag;
+private boolean vrfFlag;
 private boolean [] checkMplsIPOverIface = new boolean[4];
 private String vrfname;
 private String vrfrd;
@@ -24,8 +25,7 @@ private String vrfrt;
 private String bgpProcess;
 private String eigrpProcess;
 private String [][] rutasEstaticas= new String[5][4];
-private String [] rutasdinamic= new String[5];
-private String [] mascarasdinamic= new String[5];
+private String [][] rutasDinamicas= new String[5][2];
 private ArrayList<String> interfacesNames = new ArrayList<>();
 private String [] ipsInterfaces = new String[4];
 private String [] masksInterfaces = new String[4];
@@ -70,6 +70,12 @@ public String[][] getRutasEstaticas() {
 }
 public void setRutasEstaticas(String[][] rutas) {
 	this.rutasEstaticas = rutas;
+}
+public String[][] getRutasDinamicas() {
+	return rutasDinamicas;
+}
+public void setRutasDinamicas(String[][] rutasDinamicas) {
+	this.rutasDinamicas = rutasDinamicas;
 }
 
 public boolean isBgpflag() {
@@ -127,129 +133,6 @@ public void setMplsipboolean(boolean mplsipboolean) {
 	this.mplsipGlobalFlag = mplsipboolean;
 }
 
-public String listConfig() {
-	if (cefFlag == true) {
-		System.out.println("CEF: Activado");
-	} 
-	else {
-		System.out.println("CEF: Desactivado");
-	}
-	if (ifCpe) {
-		System.out.println("Tipo de Dispositivo: CPE");
-	}
-	if (mplsipGlobalFlag == true) {
-		System.out.println("MPLS: Activado");
-		System.out.println("Vrf : " + getVrfname());
-		System.out.println("Router Distinguisher (RD): " + getVrfrd());
-		System.out.println("Route Target (RD): " + getVrfrt());
-	} 
-	else {
-		System.out.println("MPLS: Desactivado");
-	}
-	
-	if (bgpFlag) {
-		System.out.println("BGP:Activado " + "Proceso: " + getBgpProcess());
-	}
-	else{
-		System.out.println("BGP: Desactivado");
-		
-	}
-	if (eigrpFlag) {
-		System.out.println("EIGRP:Activado " + "Proceso: " + getEigrpProcess());
-	}
-	else {
-		System.out.println("EIGRP: Desactivado");
-	}
-	return null;
-	
-	
-	
-}
-
-public String listCEF(){
-	if (cefFlag == true) {
-		return "CEF: Activado\n";
-	} 
-	else {
-		return "CEF: Desactivado\n";
-	}
-	
-	
-	
-}
-
-
-
-public String listMPLS(){
-	if (mplsipGlobalFlag == true) {
-		return "MPLS: Activado\n" + "Vrf : " + getVrfname()+"\n" + "Router Distinguisher (RD): " 
-	+ getVrfrd() +"\n"+"Route Target (RD): " + getVrfrt() + "\n" ;
-		
-			} 
-	else {
-		return "MPLS: Desactivado\n";
-	}
-	
-	
-}
-
-
-public String listBGP() {
-	if (bgpFlag) {
-		return "BGP:Activado " + "\n" + "Proceso: " + getBgpProcess() + " AS: "+getBgpRemoteAs() +" Vecino BGP: " + getBgpNeighbor()+"\n";
-	}
-	else{
-		return "BGP: Desactivado\n";
-}
-}
-
-public String listEIGRP() {
-	if (eigrpFlag) {
-		return "EIGRP:Activado " + "Proceso: " + getEigrpProcess() + "\n";
-	}
-	else{
-		return "EIGRP: Desactivado\n";
-}
-}
-public String getBgpNeighbor() {
-	return bgpNeighbor;
-	
-}
-public void setBgpNeighbor(String bgpNeighbor) {
-	this.bgpNeighbor = bgpNeighbor;
-}
-
-
-public String getBgpRemoteAs() {
-	return bgpRemoteAs;
-}
-public void setBgpRemoteAs(String bgpRemoteAs) {
-	this.bgpRemoteAs = bgpRemoteAs;
-}
-public String listStaticRoutes() {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public String listinterfaces_Vrf_mplsip(int j){
-	return "Interface: " + getInterfacesNames(j) + 
-									" |IP: " + getIpsInterfaces()[j] + " |Mascara: " + getMasksInterfaces()[j] + 
-									" \n[Forwarding VRF:" + getForwardingVRF()[j] + "]"+"\n";
-	
-	
-}
-public String [] getRutasdinamic() {
-	return rutasdinamic;
-}
-public void setRutasdinamic(String [] rutasdinamic) {
-	this.rutasdinamic = rutasdinamic;
-}
-public String [] getMascarasdinamic() {
-	return mascarasdinamic;
-}
-public void setMascarasdinamic(String [] mascarasdinamic) {
-	this.mascarasdinamic = mascarasdinamic;
-}
 public boolean isIfCpe() {
 	return ifCpe;
 }
@@ -285,46 +168,176 @@ public void setCountdinamic(int countdinamic) {
 	this.countdinamic = countdinamic;
 }
 
+public String getBgpNeighbor() {
+	return bgpNeighbor;
+	
+}
+public void setBgpNeighbor(String bgpNeighbor) {
+	this.bgpNeighbor = bgpNeighbor;
+}
+
+public String getBgpRemoteAs() {
+	return bgpRemoteAs;
+}
+public void setBgpRemoteAs(String bgpRemoteAs) {
+	this.bgpRemoteAs = bgpRemoteAs;
+}
+public boolean isVrfFlag() {
+	return vrfFlag;
+}
+public void setVrfFlag(boolean vrfFlag) {
+	this.vrfFlag = vrfFlag;
+}
+
+public String listCEF(){
+	if (cefFlag == true) {
+		return "CEF: Activado\n";
+	} 
+	else {
+		return "CEF: Desactivado\n";
+	}
+	
+	
+	
+}
+
+public String listMPLS(){
+	if (mplsipGlobalFlag == true) {
+		return "MPLS: Activado\n"; 
+		
+			} 
+	else {
+		return "MPLS: Desactivado\n";
+	}
+	
+	
+}
+
+public String listBGP() {
+	if (bgpFlag) {
+		return "BGP:Activado " + "\n" + "Proceso: " + getBgpProcess() + " AS: "+getBgpRemoteAs() +" Vecino BGP: " + getBgpNeighbor()+"\n";
+	}
+	else{
+		return "BGP: Desactivado\n";
+}
+}
+
+public String listEIGRP() {
+	if (eigrpFlag) {
+		return "EIGRP:Activado " + "Proceso: " + getEigrpProcess() + "\n";
+	}
+	else{
+		return "EIGRP: Desactivado\n";
+}
+}
+
+public String listStaticRoutes() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+public String listinterfaces_Vrf_mplsip(int j){
+	return "Interface: " + getInterfacesNames(j) + 
+									" |IP: " + getIpsInterfaces()[j] + " |Mascara: " + getMasksInterfaces()[j] + 
+									" \n[Forwarding VRF:" + getForwardingVRF()[j] + "]"+"\n";
+	
+	
+}
+
+public String listVrf(){
+	if (vrfFlag) {
+		return "Vrf : " + getVrfname()+"\n" + "Router Distinguisher (RD): " 
+				+ getVrfrd() +"\n"+"Route Target (RD): " + getVrfrt() + "\n" ;
+	}
+	return null;
+	
+} 
+
+
+
 
 public JTextArea showparameter(JTextArea configResultView) {
 	// TODO agregar al jtextarea los valores de la configuracion segun corresponda
+
+
+	
+//Dispositivo CPE
 if (ifCpe) {
 	configResultView.append(this.listCEF());
+	//BGP
+	checkRoutingProtocol(configResultView);
+	
+	}
+
+//Dispositivo PE
+if (ifPe) {
+	checkmplsipGlobal(configResultView);
+	if (vrfFlag) {
+		configResultView.append(this.listVrf());
+	}
+	checkRoutingProtocol(configResultView);
+}
+//Dispositivo P
+if (ifP) {
+	checkmplsipGlobal(configResultView);
+	checkRoutingProtocol(configResultView);
+}
+//INTERFACES Para todos los Dispositivos
+for (int j = 0; j < this.interfacesNames.size(); j++) {
+	configResultView.append(this.listinterfaces_Vrf_mplsip(j));
+}
+
+//RUTAS ESTATICAS Para todos los Dispositivos
+if (countestatic !=0) {
+
+
+	configResultView.append("|  Red Origen  ||    Mascara      ||  Red Destino    ||    Mascara      |\n");
+for (int i = 0; i < countestatic; i++) {
+	for (int j = 0; j < 4; j++) {
+
+		configResultView.append(this.listrutasEstaticas(rutasEstaticas,i,j));
+		
+}
+	configResultView.append("\n");
+}
+
+}	
+//RUTAS DINAMICAS Para todos los Dispositivos
+if (countdinamic !=0) {
+	
+
+	configResultView.append("| Rutas BGP/EIGRP  ||    Mascara      |\n");
+for (int i = 0; i < countdinamic; i++) {
+	for (int j = 0; j < 2; j++) {
+
+		configResultView.append(this.listrutasDinamicas(rutasDinamicas,i,j));
+		
+}
+	configResultView.append("\n");
+}
+
+}	
+	
+	return configResultView;
+}
+
+public void checkmplsipGlobal(JTextArea configResultView) {
+	if (mplsipGlobalFlag) {
+		configResultView.append(this.listMPLS());
+	}
+}
+public void checkRoutingProtocol(JTextArea configResultView) {
 	if (bgpFlag) {
 		configResultView.append(this.listBGP());
 		}
+	//EIGRP
 	if (eigrpFlag) {
 		configResultView.append(this.listEIGRP());
 		}
-	for (int j = 0; j < 4; j++) {
-		
-		configResultView.append(this.listinterfaces_Vrf_mplsip(j));
-	}
-if (countestatic !=0) {
-	
-
-		configResultView.append("|  Red Origen  ||    Mascara      ||  Red Destino    ||    Mascara      |\n");
-	for (int i = 0; i < countestatic; i++) {
-		for (int j = 0; j < 4; j++) {
-
-			configResultView.append(this.listrutasEstaticas(rutasEstaticas,i,j));
-			
-	}
-		configResultView.append("\n");
-	}
-	
-}	
-	}
-
-
-if (ifPe) {
-	
 }
-
-if (ifP) {
-	
-}
-	return configResultView;
+private String listrutasDinamicas(String[][] rutasDinamicas, int i, int j) {
+	// TODO Auto-generated method stub
+	return "| "+ rutasDinamicas[i][j]+" |";
 }
 private String listrutasEstaticas(String[][] rutasEstaticas, int i, int j) {
 	

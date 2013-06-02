@@ -85,8 +85,7 @@ public class Login extends JFrame {
 				v1.parametrosconex(ip.getText(),puerto.getText(),comunitySnmp.getText(),usuario.getText(),password.getText());
 				//bloquea las demas ventanas, la setea como modal
 				v1.setModal(true);
-				
-				
+	
 				
 				
 				
