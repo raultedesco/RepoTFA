@@ -24,8 +24,8 @@ private String vrfrd;
 private String vrfrt;
 private String bgpProcess;
 private String eigrpProcess;
-private String [][] rutasEstaticas= new String[5][4];
-private String [][] rutasDinamicas= new String[5][2];
+private String [][] rutasEstaticas= new String[3][3];
+private String [][] rutasDinamicas= new String[3][2];
 private ArrayList<String> interfacesNames = new ArrayList<>();
 private String [] ipsInterfaces = new String[4];
 private String [] masksInterfaces = new String[4];
@@ -43,6 +43,11 @@ public void setForwardingVRF(String[] forwardingVRF) {
 }
 public String getInterfacesNames(int index) {
 	return interfacesNames.get(index);
+}
+public int getInterfacesNamesSize(){
+	return this.interfacesNames.size();
+	
+	
 }
 public void setInterfacesNames(ArrayList<String> interfacesbysnmp) {
 	this.interfacesNames = interfacesbysnmp;
@@ -289,11 +294,11 @@ for (int j = 0; j < this.interfacesNames.size(); j++) {
 
 //RUTAS ESTATICAS Para todos los Dispositivos
 if (countestatic !=0) {
+	
 
-
-	configResultView.append("|  Red Origen  ||    Mascara      ||  Red Destino    ||    Mascara      |\n");
+	configResultView.append("|  Red Origen  ||    Mascara      ||  Red Destino    \n");
 for (int i = 0; i < countestatic; i++) {
-	for (int j = 0; j < 4; j++) {
+	for (int j = 0; j < 3; j++) {
 
 		configResultView.append(this.listrutasEstaticas(rutasEstaticas,i,j));
 		

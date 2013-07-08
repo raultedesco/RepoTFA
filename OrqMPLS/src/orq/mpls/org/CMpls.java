@@ -2,6 +2,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
@@ -30,9 +32,6 @@ public class CMpls extends JDialog {
 	private String comunity;
 	private String usuario;
 	private String password;
-	
-	private JTextField rutasEstaticascompletas[][] = new JTextField[5][4];
-	private JTextField rutasDinamicasCompletas[][] =new JTextField[5][2];
 	
 	
 	//TODO descomentar esta linea para generar objeto que hable SNMP
@@ -101,10 +100,26 @@ public class CMpls extends JDialog {
 	private JLabel lblAs;
 	private JLabel lblVecinoBgp;
 	private JLabel lblRutas2;
-	private JLabel lblNewLabel2;
 	private JLabel lblNewLabel;
 	private JLabel lblRutas;
 	
+	private JTextField rorigen;
+	private JTextField rmascara;
+	private JTextField rdestino;
+	private JTextField rorigen1;
+	private JTextField rmascara1;
+	private JTextField rdestino1;
+	private JTextField rorigen2;
+	private JTextField rmascara2;
+	private JTextField rdestino2;
+	
+	private JTextField rdorigen;
+	private JTextField rdmascara;
+	private JTextField rdorigen1;
+	private JTextField rdmascara1;
+	private JTextField rdorigen2;
+	private JTextField rdmascara2;
+
 	
 	
 	
@@ -138,7 +153,7 @@ public class CMpls extends JDialog {
 
 					//TODO descomentar esta linea para generar objeto que hable SNMP
 					interfacesbysnmp = con1.printInterface();
-					interfacesbysnmp.add("None");
+					interfacesbysnmp.add(0,"None");
 							} catch (Exception e2) {//cambiar por IOException
 					
 								JOptionPane message = new JOptionPane();
@@ -328,12 +343,41 @@ public class CMpls extends JDialog {
 					textIP1.setText("None");
 					textIP1.setBounds(151, 245, 114, 22);
 					jp1.add(textIP1);
+					textIP1.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textIP1.selectAll();
+						}
+					});
 					textIP1.setColumns(10);
 					
 					textMask1 = new JTextField();
 					textMask1.setText("None");
 					textMask1.setBounds(275, 245, 114, 22);
 					jp1.add(textMask1);
+					textMask1.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textMask1.selectAll();
+						}
+					});
+					
 					textMask1.setColumns(10);
 					
 					checkboxMPLSIP1 = new JCheckBox("");
@@ -345,18 +389,59 @@ public class CMpls extends JDialog {
 					textForwardingVRF1.setBounds(461, 245, 114, 22);
 					jp1.add(textForwardingVRF1);
 					textForwardingVRF1.setColumns(10);
-					
+					textForwardingVRF1.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textForwardingVRF1.selectAll();
+						}
+					});
 					textIP2 = new JTextField();
 					textIP2.setText("None");
 					textIP2.setColumns(10);
 					textIP2.setBounds(151, 280, 114, 22);
 					jp1.add(textIP2);
+					textIP2.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textIP2.selectAll();
+						}
+					});
 					
 					textMask2 = new JTextField();
 					textMask2.setText("None");
 					textMask2.setColumns(10);
 					textMask2.setBounds(275, 280, 114, 22);
 					jp1.add(textMask2);
+					textMask2.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textMask2.selectAll();
+						}
+					});
 					
 					checkboxMPLSIP2 = new JCheckBox("");
 					checkboxMPLSIP2.setBounds(401, 279, 45, 23);
@@ -367,18 +452,60 @@ public class CMpls extends JDialog {
 					textForwardingVRF2.setColumns(10);
 					textForwardingVRF2.setBounds(461, 280, 114, 22);
 					jp1.add(textForwardingVRF2);
+					textForwardingVRF2.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textForwardingVRF2.selectAll();
+						}
+					});
 					
 					textIP3 = new JTextField();
 					textIP3.setText("None");
 					textIP3.setColumns(10);
 					textIP3.setBounds(151, 315, 114, 22);
 					jp1.add(textIP3);
+					textIP3.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textIP3.selectAll();
+						}
+					});
 					
 					textMask3 = new JTextField();
 					textMask3.setText("None");
 					textMask3.setColumns(10);
 					textMask3.setBounds(275, 315, 114, 22);
 					jp1.add(textMask3);
+					textMask3.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textMask3.selectAll();
+						}
+					});
 					
 					checkboxMPLSIP3 = new JCheckBox("");
 					checkboxMPLSIP3.setBounds(401, 314, 45, 23);
@@ -389,18 +516,59 @@ public class CMpls extends JDialog {
 					textForwardingVRF3.setColumns(10);
 					textForwardingVRF3.setBounds(461, 315, 114, 22);
 					jp1.add(textForwardingVRF3);
+					textForwardingVRF3.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textForwardingVRF3.selectAll();
+						}
+					});
 					
 					textIP4 = new JTextField();
 					textIP4.setText("None");
 					textIP4.setColumns(10);
 					textIP4.setBounds(151, 346, 114, 22);
 					jp1.add(textIP4);
-					
+					textIP4.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textIP4.selectAll();
+						}
+					});
 					textMask4 = new JTextField();
 					textMask4.setText("None");
 					textMask4.setColumns(10);
 					textMask4.setBounds(275, 346, 114, 22);
 					jp1.add(textMask4);
+					textMask4.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textMask4.selectAll();
+						}
+					});
 					
 					checkboxMPLSIP4 = new JCheckBox("");
 					checkboxMPLSIP4.setBounds(401, 345, 45, 23);
@@ -411,6 +579,20 @@ public class CMpls extends JDialog {
 					textForwardingVRF4.setColumns(10);
 					textForwardingVRF4.setBounds(461, 346, 114, 22);
 					jp1.add(textForwardingVRF4);
+					textForwardingVRF4.addFocusListener(new FocusListener() {
+						
+						@Override
+						public void focusLost(FocusEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void focusGained(FocusEvent e) {
+							// TODO Auto-generated method stub
+							textForwardingVRF4.selectAll();
+						}
+					});
 					
 					
 					
@@ -426,10 +608,6 @@ public class CMpls extends JDialog {
 		lblRutas2 = new JLabel("Red Destino");
 		lblRutas2.setBounds(250, 400, 114, 15);
 		jp1.add(lblRutas2);
-		
-		lblNewLabel2 = new JLabel("Mascara");
-		lblNewLabel2.setBounds(370, 400, 70, 15);
-		jp1.add(lblNewLabel2);
 		
 
 		comboBoxInterface1 = new JComboBox();
@@ -472,6 +650,8 @@ public class CMpls extends JDialog {
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						SendCurrentConfig SConfig = new SendCurrentConfig(c1,configGenView);
+						JOptionPane message = new JOptionPane();
+						message.showMessageDialog(jp1,	"Configuracion Enviada...");
 					
 						
 					}
@@ -502,57 +682,91 @@ public class CMpls extends JDialog {
 				neighborIP.setColumns(10);
 				
 				label_2 = new JLabel("Rutas BGP/EIGRP");
-				label_2.setBounds(500, 400, 133, 15);
+				label_2.setBounds(461, 400, 133, 15);
 				jp1.add(label_2);
 				
 				label_3 = new JLabel("Mascara");
-				label_3.setBounds(628, 400, 70, 15);
+				label_3.setBounds(589, 400, 70, 15);
 				jp1.add(label_3);
 				
 				
 				buttonAddRutas_Mask = new JButton("+");
 				//agrego el boton +  al panel
-				buttonAddRutas_Mask.setBounds(446, 396, 44, 22);
+				buttonAddRutas_Mask.setBounds(345, 396, 44, 22);
 				jp1.add(buttonAddRutas_Mask);
 				buttonAddRutas_Mask.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						//establesco un maximo de 5 rutas								
-					if (countestatic < 5) {
-						//llamo a los metodos que agregara dinamicamente los campos para insercion de las rutas
-						addrutasEstaticas(jp1, y, countestatic);
-						//incremento contadores de posicion en array y ventana
-						countestatic++;
-						y=y+30;
-					} 
-					else {
-					mensajelimiterutas.setText("Solo se permite un maximo de 5 rutas (Estaticas/Dinamicas) por envio de configuracion...");
+					countestatic++;
+						if (countestatic==1) {
+							rorigen.setVisible(true);
+							rmascara.setVisible(true);
+							rdestino.setVisible(true);
+						}
+						if (countestatic==2) {
+							rorigen1.setVisible(true);
+							rmascara1.setVisible(true);
+							rdestino1.setVisible(true);
+						}
+						if (countestatic==3) {
+							rorigen2.setVisible(true);
+							rmascara2.setVisible(true);
+							rdestino2.setVisible(true);
+						}
 					
-					}	
+						if (countestatic>2) {
+							mensajelimiterutas.setText("Solo se permite un maximo de 3 rutas (Estaticas/Dinamicas) por envio de configuracion...");
+							countestatic=3;
+							
+						}
+
 				}//action performed boton mas para agregar rutas ok
 			});
 				
 								
 				buttonAddRutas_Mask_Dinamic = new JButton("+");
+				buttonAddRutas_Mask_Dinamic.setEnabled(false);
 				buttonAddRutas_Mask_Dinamic.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						// TODO codigo para generar botones de rutas BGP / EIGRP
-						if (countDinamic < 5) {
-							//llamo a los metodos que agregara dinamicamente los campos para insercion de las rutas
-							addrutasDinamicas(jp1,y_dinamic,countDinamic);
-							//incremento contadores de posicion en array y ventana
-							countDinamic++;
-							y_dinamic=y_dinamic+30;
-						} 
-						else {
-						mensajelimiterutas.setText("Solo se permite un maximo de 5 rutas (Estaticas/Dinamicas) por envio de configuracion...");
+					countDinamic++;
+					if(checkboxActiveBGP.isSelected() | checkboxActiveEigrp.isSelected()){		
+						if (rdorigen.isVisible()&&rdmascara.isVisible()) {
+
 						
-						}	
-						
-						
+								if (countDinamic==2) {
+									rdorigen1.setVisible(true);
+									rdmascara1.setVisible(true);
+									
+								}
+
+								
+								if (countDinamic==3) {
+									rdorigen2.setVisible(true);
+									rdmascara2.setVisible(true);
+
+								}
+							
+						}
 					}
+								if (countDinamic>2) {
+									mensajelimiterutas.setText("Solo se permite un maximo de 3 rutas (Estaticas/Dinamicas) por envio de configuracion...");
+									countDinamic=3;
+								}
+							}
+
+														
+					 
+						
+						
+						
+					
 				});
-				buttonAddRutas_Mask_Dinamic.setBounds(707, 396, 44, 22);
+				buttonAddRutas_Mask_Dinamic.setBounds(668, 393, 44, 22);
 				jp1.add(buttonAddRutas_Mask_Dinamic);
+				
+				addRutasEstaticas();
+				addRutasDinamicas();
+				
 				
 
 		//Panel 2 Routing Protocols	
@@ -575,7 +789,100 @@ this.checkActiveCheckMpls();
 				
 
 }// Final Constructor CMPLS
+
+
+	
+
+	public void addRutasEstaticas() {
+		rorigen = new JTextField();
+		rorigen.setBounds(10, 427, 114, 22);
+		jp1.add(rorigen);
+		rorigen.setColumns(10);
+		rorigen.setVisible(false);
+		rmascara = new JTextField();
+		rmascara.setBounds(130, 427, 114, 22);
+		jp1.add(rmascara);
+		rmascara.setColumns(10);
+		rmascara.setVisible(false);
+		rdestino = new JTextField();
+		rdestino.setBounds(250, 427, 114, 22);
+		jp1.add(rdestino);
+		rdestino.setColumns(10);
+		rdestino.setVisible(false);
+
+		rorigen1 = new JTextField();
+		rorigen1.setBounds(10, 457, 114, 22);
+		jp1.add(rorigen1);
+		rorigen1.setColumns(10);
+		rorigen1.setVisible(false);
+		rmascara1 = new JTextField();
+		rmascara1.setBounds(130, 457, 114, 22);
+		jp1.add(rmascara1);
+		rmascara1.setColumns(10);
+		rmascara1.setVisible(false);
+		rdestino1 = new JTextField();
+		rdestino1.setBounds(250, 457, 114, 22);
+		jp1.add(rdestino1);
+		rdestino1.setColumns(10);
+		rdestino1.setVisible(false);
 		
+		rorigen2 = new JTextField();
+		rorigen2.setBounds(10, 487, 114, 22);
+		jp1.add(rorigen2);
+		rorigen2.setColumns(10);
+		rorigen2.setVisible(false);
+		rmascara2 = new JTextField();
+		rmascara2.setBounds(130, 487, 114, 22);
+		jp1.add(rmascara2);
+		rmascara2.setColumns(10);
+		rmascara2.setVisible(false);
+		rdestino2 = new JTextField();
+		rdestino2.setBounds(250, 487, 114, 22);
+		jp1.add(rdestino2);
+		rdestino2.setColumns(10);
+		rdestino2.setVisible(false);
+	
+	}
+		
+	
+	public void addRutasDinamicas() {
+		rdorigen = new JTextField();
+		rdorigen.setBounds(461, 427, 114, 22);
+		jp1.add(rdorigen);
+		rdorigen.setColumns(10);
+		rdorigen.setVisible(false);
+		rdmascara = new JTextField();
+		rdmascara.setBounds(581, 427, 114, 22);
+		jp1.add(rdmascara);
+		rdmascara.setColumns(10);
+		rdmascara.setVisible(false);
+		
+
+		rdorigen1 = new JTextField();
+		rdorigen1.setBounds(461, 457, 114, 22);
+		jp1.add(rdorigen1);
+		rdorigen1.setColumns(10);
+		rdorigen1.setVisible(false);
+		rdmascara1 = new JTextField();
+		rdmascara1.setBounds(581, 457, 114, 22);
+		jp1.add(rdmascara1);
+		rdmascara1.setColumns(10);
+		rdmascara1.setVisible(false);
+		
+		
+		rdorigen2 = new JTextField();
+		rdorigen2.setBounds(461, 487, 114, 22);
+		jp1.add(rdorigen2);
+		rdorigen2.setColumns(10);
+		rdorigen2.setVisible(false);
+		rdmascara2 = new JTextField();
+		rdmascara2.setBounds(581, 487, 114, 22);
+		jp1.add(rdmascara2);
+		rdmascara2.setColumns(10);
+		rdmascara2.setVisible(false);
+		
+	
+	}
 		
 		private void botonesCancel_Enviar(JPanel jpGeneric) {
 			JButton btnEnviar = new JButton("Ver Config Generada");
@@ -676,31 +983,69 @@ try {
 			forwardingVRF[3]=textForwardingVRF4.getText();
 			c1.setForwardingVRF(forwardingVRF);
 			
-			//Rutas Estaticas
-			String temprutasestaticas[][] = new String[countestatic][4];	
-			for (int i = 0; i < countestatic; i++) {
-				for (int j = 0; j < rutasEstaticascompletas[i].length; j++) {
+			// TODO Modificar esta parte Rutas Estaticas
+			String temprutasestaticas[][] = new String[countestatic][3];	
+			if (countestatic==1&&rorigen.isVisible()&&rmascara.isVisible()&&rdestino.isVisible()) {
+				temprutasestaticas[0][0]= rorigen.getText();
+				temprutasestaticas[0][1]=rmascara.getText();
+				temprutasestaticas[0][2]=rdestino.getText();
+				
 
-					temprutasestaticas[i][j]= rutasEstaticascompletas[i][j].getText();
+			}
+			if (countestatic==2&&rorigen1.isVisible()&&rmascara1.isVisible()&&rdestino1.isVisible()) {
+				temprutasestaticas[0][0]= rorigen.getText();
+				temprutasestaticas[0][1]=rmascara.getText();
+				temprutasestaticas[0][2]=rdestino.getText();
+				temprutasestaticas[1][0]= rorigen1.getText();
+				temprutasestaticas[1][1]=rmascara1.getText();
+				temprutasestaticas[1][2]=rdestino1.getText();
+			}
+				
+			if (countestatic==3&&rorigen2.isVisible()&&rmascara2.isVisible()&&rdestino2.isVisible()) {
+				temprutasestaticas[0][0]= rorigen.getText();
+				temprutasestaticas[0][1]=rmascara.getText();
+				temprutasestaticas[0][2]=rdestino.getText();
+				temprutasestaticas[1][0]= rorigen1.getText();
+				temprutasestaticas[1][1]=rmascara1.getText();
+				temprutasestaticas[1][2]=rdestino1.getText();
+				temprutasestaticas[2][0]=rorigen2.getText();
+				temprutasestaticas[2][1]=rmascara2.getText();
+				temprutasestaticas[2][2]=rdestino2.getText();
+			}
+		
 					
-			}
-			}
+
 			c1.setRutasEstaticas(temprutasestaticas);
 
-			//Rutas Dinamicas
+			// TODO Modificar esta parte Rutas Dinamicas
 			String temprutasdinamicas[][] = new String[countDinamic][2];	
-			for (int i = 0; i < countDinamic; i++) {
-				for (int j = 0; j < rutasDinamicasCompletas[i].length; j++) {
-
-					temprutasdinamicas[i][j]= rutasDinamicasCompletas[i][j].getText();
-					
+			if (countDinamic==1&&rdorigen.isVisible()&&rdmascara.isVisible()) {
+				temprutasdinamicas[0][0]= rdorigen.getText();
+				temprutasdinamicas[0][1]=rdmascara.getText();
+			
 			}
+			if (countDinamic==2&&rdorigen1.isVisible()&&rdmascara1.isVisible()) {
+				temprutasdinamicas[0][0]= rdorigen.getText();
+				temprutasdinamicas[0][1]=rdmascara.getText();
+				temprutasdinamicas[1][0]= rdorigen1.getText();
+				temprutasdinamicas[1][1]=rdmascara1.getText();
+
+			}
+			if (countDinamic==3&&rdorigen2.isVisible()&&rdmascara2.isVisible()) {
+				temprutasdinamicas[0][0]= rdorigen.getText();
+				temprutasdinamicas[0][1]=rdmascara.getText();
+				temprutasdinamicas[1][0]= rdorigen1.getText();
+				temprutasdinamicas[1][1]=rdmascara1.getText();
+				temprutasdinamicas[2][0]= rdorigen2.getText();
+				temprutasdinamicas[2][1]=rdmascara2.getText();
+
 			}
 			c1.setRutasDinamicas(temprutasdinamicas);
 			
 			c1.showparameter(configResultView);
 
-		
+			configResultView.append("count dinamic" + c1.getCountdinamic());
+			configResultView.append("count estatic" + c1.getCountestatic());
 		}
 
 
@@ -712,32 +1057,9 @@ public void checkcomboboxinterface(JComboBox<?> JComboBoxInterface,int index) {
 
 
 	
-	public String addrutasEstaticas(JPanel jpgeneric,int y, int countestatic){
-		int xEstatic = 10;
-		for (int c = 0; c < 4; c++) {
-		rutasEstaticascompletas[countestatic][c] = new JTextField("none");
-		rutasEstaticascompletas[countestatic][c].setVisible(true);
-		rutasEstaticascompletas[countestatic][c].setBounds(xEstatic,y,114,22);
-		jpgeneric.add(rutasEstaticascompletas[countestatic][c]);
-		xEstatic=xEstatic+120;
-					
-		}
 
-		return null;
-		
-	}
 	
-	public String addrutasDinamicas(JPanel jpgeneric, int y, int count) {
-		int xDinamic = 500;
-		for (int c = 0; c < 2; c++) {
-		rutasDinamicasCompletas[count][c]= new JTextField("ruta dinamica");
-		rutasDinamicasCompletas[count][c].setVisible(true);
-		rutasDinamicasCompletas[count][c].setBounds(xDinamic, y, 114, 22);
-	    jpgeneric.add(rutasDinamicasCompletas[count][c]);
-	    xDinamic=xDinamic+120;
-		}
-		 return null;
-	}
+
 
 
 	 public boolean  checkActiveCheckBGP() {
@@ -747,24 +1069,52 @@ public void checkcomboboxinterface(JComboBox<?> JComboBoxInterface,int index) {
 			public void itemStateChanged(ItemEvent e) {
 				
 				 if (checkboxActiveBGP.isSelected()) {
+					 buttonAddRutas_Mask_Dinamic.setEnabled(true);
 					 textFieldProcesoBGP.setEditable(true);
 					 checkboxActiveEigrp.setEnabled(false);
 					 textFieldProcesoEigrp.setEditable(false);
 					 activebgp(true);
-					
+					 rdorigen.setVisible(true);
+					 rdmascara.setVisible(true);
+					 countDinamic++;
+
 				}
 				 if (checkboxActiveBGP.isSelected() == false) {
+					 buttonAddRutas_Mask_Dinamic.setEnabled(false);
 					 textFieldProcesoBGP.setEditable(false);
 					 checkboxActiveEigrp.setEnabled(true);
 					 textFieldProcesoEigrp.setEditable(false);
 					 activebgp(false);
+					 offRedesDinamicas();
+					 countDinamic=0;
 					
 				}			}
+
+			/**
+			 * 
+			 */
+
 		};
 		checkboxActiveBGP.addItemListener(itemlistener);
 		return checkboxActiveBGP.isSelected();
 	 }
 	 
+		public void offRedesDinamicas() {
+			if (rdorigen.isVisible()&& rdmascara.isVisible()) {
+				rdorigen.setVisible(false);
+				rdmascara.setVisible(false);
+			}
+			if (rdorigen1.isVisible()&& rdmascara1.isVisible()) {
+				rdorigen1.setVisible(false);
+				rdmascara1.setVisible(false);
+			}
+			 if (rdorigen2.isVisible()&& rdmascara2.isVisible()) {
+				rdorigen2.setVisible(false);
+				rdmascara2.setVisible(false);
+			}
+			 countDinamic=0;
+		}
+		
 	 protected void activebgp(boolean estado) {
 		// TODO Auto-generated method stub
 		lblProcess.setEnabled(estado);
@@ -788,19 +1138,25 @@ public void checkcomboboxinterface(JComboBox<?> JComboBoxInterface,int index) {
 			public void itemStateChanged(ItemEvent e) {
 				
 				 if (checkboxActiveEigrp.isSelected()) {
+					 buttonAddRutas_Mask_Dinamic.setEnabled(true);
 					 textFieldProcesoEigrp.setEnabled(true);
 					 textFieldProcesoEigrp.setEditable(true);
 					 checkboxActiveBGP.setEnabled(false);
 					 textFieldProcesoBGP.setEditable(false);
-			
+					 rdorigen.setVisible(true);
+					 rdmascara.setVisible(true);
+					 countDinamic++;
 					 
 					
 				}
 				 if (checkboxActiveEigrp.isSelected() == false) {
+					 buttonAddRutas_Mask_Dinamic.setEnabled(false);
 					 textFieldProcesoEigrp.setEnabled(false);
 					 textFieldProcesoBGP.setEditable(false);
 					 checkboxActiveBGP.setEnabled(true);
 					 textFieldProcesoEigrp.setEditable(false);
+					 offRedesDinamicas();
+					 countDinamic=0;
 					
 				}			}
 		};
@@ -1108,13 +1464,16 @@ public void checkcomboboxinterface(JComboBox<?> JComboBoxInterface,int index) {
 	}
 
 		
-	public void parametrosconex(String ipp, String puertop, String comunityp,String usuariop, String passwordp) {
+	public void parametrosconex(String ipp, String puertop, String comunityp,String usuariop, char[] cs) {
 		// se setean las variable de conexion snmp
 		ip=ipp;
 		puerto=puertop;
 		comunity=comunityp;
 		usuario=usuariop;
-		password=passwordp;
+		for (int i = 0; i < cs.length; i++) {
+			password=password+cs[i];
+		}
+		
 		
 	}
 	}

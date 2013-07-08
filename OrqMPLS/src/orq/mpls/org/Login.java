@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -12,10 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import java.awt.Font;
-import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -82,7 +78,7 @@ public class Login extends JFrame {
 				//nueva ventana jdialog
 				CMpls v1 = new CMpls();
 				v1.setVisible(true);
-				v1.parametrosconex(ip.getText(),puerto.getText(),comunitySnmp.getText(),usuario.getText(),password.getText());
+				v1.parametrosconex(ip.getText(),puerto.getText(),comunitySnmp.getText(),usuario.getText(),password.getPassword());
 				//bloquea las demas ventanas, la setea como modal
 				v1.setModal(true);
 	

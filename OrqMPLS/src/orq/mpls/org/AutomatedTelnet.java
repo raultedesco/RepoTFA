@@ -131,10 +131,9 @@ return callback;
 public String backroot() {
 //	char c= 26;
 //	return Character.toString(c);
-	String resul;
 	String end ="end";
-	resul=this.sendCommand(end);
-	return resul;
+	return this.sendCommand(end);
+
 }
 
 public String cvrf(CurrentConfig c1){
@@ -149,13 +148,16 @@ public String cvrf(CurrentConfig c1){
 	
 	
 }
-public void cinterface(CurrentConfig c1, int index ) {
+public String cinterface(CurrentConfig c1, int index ) {
 	// TODO chequear metodo de configuracion de ip
+	String resul;
 	String cinterface ="interface " + c1.getInterfacesNames(index);
-	String cip = "ip address " + c1.getIpsInterfaces()[index] + "" + c1.getMasksInterfaces()[index];
-	this.sendCommand(cinterface);
-	this.sendCommand(cip);
-
+	String cip = "ip address " + c1.getIpsInterfaces()[index] + " " + c1.getMasksInterfaces()[index];
+	String cipUp="no shutdown";
+	resul=this.sendCommand(cinterface);
+	resul= resul+ this.sendCommand(cip);
+	resul= resul+this.sendCommand(cipUp);
+	return resul;
 }
 
 public void cbgpMPLS(CurrentConfig c1){
@@ -188,43 +190,47 @@ public String cbgp(CurrentConfig c1){
 	return resul;
 	
 }
-public void crutaEstatica(CurrentConfig c1) {
+public String crutaEstatica(CurrentConfig c1,int i) {
 	// TODO Metodo crutaEstatica terminar
+	String crutaEstatica="ip route " +c1.getRutasEstaticas()[i][0]+" "+c1.getRutasEstaticas()[i][1]+" "+
+	c1.getRutasEstaticas()[i][2]; 
+	return this.sendCommand(crutaEstatica);
 	
-	for (int i = 0; i < 5; i++) {
-		String crutaEstatica="ip route " ;
-		this.sendCommand(crutaEstatica);
-	}
 	
 
 }
 
-public void crutaDinamica() {
+public String crutaDinamicaBGP(CurrentConfig c1, int i) {
 	// TODO Metodo crutaDinamica
-
+	String resul;
+	String rutadinamica="network "+c1.getRutasDinamicas()[i][0]+" mask "+c1.getRutasDinamicas()[i][1];
+	resul=this.sendCommand(rutadinamica);
+	return resul;
 
 }
 
-public void ceigrp(CurrentConfig c2){
-	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
-	
-	String cbgp="router eigrp " + c2.getBgpProcess();
-	this.sendCommand(cbgp);
+public String ceigrp(CurrentConfig c1,int i){
+	//TODO Config EIGRP
+	String resul;
+	String ceigrp="router eigrp " + c1.getEigrpProcess();
+	String rutadinamica="network "+c1.getRutasDinamicas()[i][0]+" "+c1.getRutasDinamicas()[i][1];
+	resul=this.sendCommand(ceigrp);
+	resul=resul+this.sendCommand(rutadinamica);
+	return resul;
+
 	
 	
 }
 public String ccef() {
-	String resul;
 	String ccef = "ip cef";
-	resul=this.sendCommand(ccef);
-	return resul;
+	return this.sendCommand(ccef);
+	
 }
 
 public String cmplsip() {
-	String resul;
 	String cmplsip = "mpls ip";
-	resul=this.sendCommand(cmplsip);
-	return resul;
+	return this.sendCommand(cmplsip);
+
 }
 
 public void savetofile() {
