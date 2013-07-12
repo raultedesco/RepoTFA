@@ -32,7 +32,8 @@ private String [] masksInterfaces = new String[4];
 private String [] forwardingVRF = new String[4];
 private String bgpNeighbor;
 private String bgpRemoteAs;
-
+private String bgpNeighborInternal;
+private String bgpRemoteAsInternal;
 
 
 public String[] getForwardingVRF() {
@@ -220,7 +221,8 @@ public String listMPLS(){
 
 public String listBGP() {
 	if (bgpFlag) {
-		return "BGP:Activado " + "\n" + "Proceso: " + getBgpProcess() + " AS: "+getBgpRemoteAs() +" Vecino BGP: " + getBgpNeighbor()+"\n";
+		return "BGP:Activado " + "\n" + "Proceso: " + getBgpProcess() + "External AS: "+getBgpRemoteAs() +" Vecino BGP External: " + getBgpNeighbor()+"\n" 
+				+ "Internal AS: "+getBgpRemoteAsInternal() +" Vecino BGP Internal: " + getBgpNeighborInternal()+"\n";
 	}
 	else{
 		return "BGP: Desactivado\n";
@@ -347,6 +349,18 @@ private String listrutasDinamicas(String[][] rutasDinamicas, int i, int j) {
 private String listrutasEstaticas(String[][] rutasEstaticas, int i, int j) {
 	
 	return "| "+ rutasEstaticas[i][j]+" |";
+}
+public String getBgpNeighborInternal() {
+	return bgpNeighborInternal;
+}
+public void setBgpNeighborInternal(String bgpNeighborInternal) {
+	this.bgpNeighborInternal = bgpNeighborInternal;
+}
+public String getBgpRemoteAsInternal() {
+	return bgpRemoteAsInternal;
+}
+public void setBgpRemoteAsInternal(String bgpRemoteAsInternal) {
+	this.bgpRemoteAsInternal = bgpRemoteAsInternal;
 }
 
 

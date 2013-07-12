@@ -160,20 +160,20 @@ public String cinterface(CurrentConfig c1, int index ) {
 	return resul;
 }
 
-public void cbgpMPLS(CurrentConfig c1){
+public String cbgpMPLS(CurrentConfig c1){
 	//TODO chequear metodo de configuracion de bgp / falta config para mplsvpn - neigbors as etc
-
+	String resul;
 	String cbgp="router bgp " + c1.getBgpProcess();
 	String cvecino="neighbor " +c1.getBgpNeighbor() +" remote-as " +c1.getBgpRemoteAs();
 	String cvecinoA="neighbor " +c1.getBgpNeighbor() +" activate";
 	String caddressfamily ="address-family ipv4 vrf " + c1.getVrfname();
-	String cvecinoI="neighbor " +c1.getBgpNeighbor() +" remote-as " +c1.getBgpRemoteAs();
-	this.sendCommand(cbgp);
-	this.sendCommand(cvecino);
-	this.sendCommand(cvecinoA);
-	this.sendCommand(caddressfamily);
-	this.sendCommand(cvecinoI);
-
+	String cvecinoI="neighbor " +c1.getBgpNeighborInternal() +" remote-as " +c1.getBgpRemoteAsInternal();
+	resul=this.sendCommand(cbgp);
+	resul=resul + this.sendCommand(cvecino);
+	resul=resul + this.sendCommand(cvecinoA);
+	resul=resul + this.sendCommand(caddressfamily);
+	resul=resul + this.sendCommand(cvecinoI);
+	return resul;
 	
 	
 }

@@ -42,6 +42,22 @@ public class SendCurrentConfig {
 	
 	}
 	
+	try {
+		if (c1.isIfPe()) {
+			send.ena("cisco");
+			configureComandsPE_P(configGenView);
+			configBGP_EIGRP_Static_Dinamic_Routes(configGenView);
+			configInterfaces(configGenView);
+			configGenView.append(send.cvrf(c1));
+			configGenView.append(send.cbgpMPLS(c1));
+			configGenView.append(send.backroot());
+		}
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	
+	
 	finally{
 		send.disconnect();
 	}
