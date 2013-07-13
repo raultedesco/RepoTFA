@@ -2,10 +2,8 @@ package orq.mpls.org;
 
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import org.omg.CORBA.OBJECT_NOT_EXIST;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
@@ -128,11 +126,13 @@ private String nextoid(String oidValue) {
 	
 }
 
+@SuppressWarnings("unused")
 public String getnext(String OID) throws IOException {
 	//System.out.println("SNMP GET-NEXT Demo");
 
     // Create TransportMapping and Listen
-    TransportMapping transport = new DefaultUdpTransportMapping();
+    @SuppressWarnings("rawtypes")
+	TransportMapping transport = new DefaultUdpTransportMapping();
     transport.listen();
 
     // Create Target Address object

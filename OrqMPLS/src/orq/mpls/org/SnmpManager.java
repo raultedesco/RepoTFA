@@ -1,6 +1,4 @@
 package orq.mpls.org;
-import java.util.List;
-
 import net.percederberg.mibble.Mib;
 import net.percederberg.mibble.MibLoader;
 import net.percederberg.mibble.MibSymbol;
@@ -128,6 +126,7 @@ public String getoid(String oid	){
 	    return null;
 	}
 	
+	@SuppressWarnings("unused")
 	private void name2OID() {
 		       String oid = null;
 		       try {
@@ -148,6 +147,7 @@ public String getoid(String oid	){
 		       }
 		   }
 	
+	@SuppressWarnings("unused")
 	private String name2OIDparametros(String namemib, String name){
 		
 		String oid = null;
@@ -221,9 +221,9 @@ public String getoid(String oid	){
 	
 	
 	public static void main(String[]args){ 
-		SnmpManager client = new SnmpManager();
-		String host = "192.168.80.110";
-		String comunity="mpls-rw";
+//		SnmpManager client = new SnmpManager();
+//		String host = "192.168.80.110";
+//		String comunity="mpls-rw";
 //		client.snmpGet("192.168.80.110","mpls-rw","1.3.6.1.2.1.1.1.0");
 //		client.snmpGet("192.168.80.110","mpls-rw","1.3.6.1.2.1.1.5.0");
 //		client.snmpGet("192.168.80.110", "mpls-rw", "1.3.6.1.2.1.2.2.1.2.1");

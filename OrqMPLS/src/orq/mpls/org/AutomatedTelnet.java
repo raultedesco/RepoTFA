@@ -263,6 +263,23 @@ public String configmode() {
 	
 }
 
+
+public String showIPRoute() {
+	// TODO Auto-generated method stub
+	String showiproute = "show ip route";
+	String resul=this.sendCommand(showiproute);
+	String newresul=resul.substring(13);
+	return newresul;
+}
+
+public String showIPInterfacesBrief() {
+	// TODO Auto-generated method stub
+	String showipinterfacebrief = "show ip interface brief";
+	String resul= this.sendCommand(showipinterfacebrief);
+	String newresult=resul.substring(23);
+	return newresult;
+}
+
 }
 
 //(config)#

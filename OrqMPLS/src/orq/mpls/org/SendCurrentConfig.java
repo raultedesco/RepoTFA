@@ -7,8 +7,9 @@ public class SendCurrentConfig {
 	AutomatedTelnet send;
 	CurrentConfig c1;
 	public SendCurrentConfig(CurrentConfig current, JTextArea configGenView) {
-	send = new AutomatedTelnet("192.168.80.110", "raul", "cisco");
-	this.c1 =current;
+		this.c1 =current;
+		send = new AutomatedTelnet(c1.getTelnetip(),c1.getTelnetusuario(), c1.getTelnetpassword());
+	
 	
 	try {
 		if (c1.isIfCpe()) {

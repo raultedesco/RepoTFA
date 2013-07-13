@@ -1,15 +1,13 @@
 	package orq.mpls.org;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.image.ImageProducer;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +21,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.Icon;
 
 @SuppressWarnings("serial")
 public class CMpls extends JDialog {
@@ -58,8 +61,6 @@ public class CMpls extends JDialog {
 	private JTextField textFieldRT;
 	private int countestatic = 0;
 	private int countDinamic = 0;
-	private int y=430;
-	private int y_dinamic=430;
 	private JCheckBox checkboxRT;
 	private JCheckBox checkboxRD;
 	private JTextArea configResultView;
@@ -129,6 +130,15 @@ public class CMpls extends JDialog {
 	private JLabel labelExternal;
 	private JLabel labelVecinoBGPInternal;
 	private JLabel lblNewLabel_7;
+	private JPanel jp2;
+	private JTextArea configGenViewRoutingTable;
+	private JScrollPane monitoringnetwork;
+	private JButton btnActualizarRoutingTable;
+	private JButton btnActualizarIPInterfacesBrief;
+	private JTextArea configGenViewIPInterfaceBrief;
+	private JScrollPane scrollPane_2;
+	private JLabel lblNewLabel_9;
+	private JLabel label_1;
 
 	
 	
@@ -142,9 +152,10 @@ public class CMpls extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	@SuppressWarnings("static-access")
 	public CMpls() {
 		setTitle("Orquestador MPLS");
-		
+
 		
 		
 		setBounds(100, 100, 450, 300);
@@ -292,7 +303,7 @@ public class CMpls extends JDialog {
 					jp1.add(textFieldRT);
 					
 					JLabel lblNewLabel_1 = new JLabel("Parametros de Configuracion");
-					lblNewLabel_1.setBounds(826, 20, 218, 15);
+					lblNewLabel_1.setBounds(863, 10, 218, 15);
 					jp1.add(lblNewLabel_1);
 					//jp1.add(textArea);
 					
@@ -311,7 +322,7 @@ public class CMpls extends JDialog {
 					
 					//segundo jtexarea para mostrar los comandos
 					JLabel lblNewLabel_29 = new JLabel("Resultado de Aplicacion de Configuracion  ");
-					lblNewLabel_29.setBounds(826, 255, 314, 15);
+					lblNewLabel_29.setBounds(863, 253, 314, 15);
 					jp1.add(lblNewLabel_29);
 					//jp1.add(textArea);
 					
@@ -809,17 +820,38 @@ public class CMpls extends JDialog {
 						neighborIPInternal.setColumns(10);
 						neighborIPInternal.setBounds(511, 188, 114, 22);
 						jp1.add(neighborIPInternal);
-						JLabel lblNewLabel_6 = new JLabel(new ImageIcon("images/p.png"));
-						lblNewLabel_6.setBounds(434, 26, 24, 34);
+						JLabel lblNewLabel_6 = new JLabel(new ImageIcon("images/ip.png"));
+						lblNewLabel_6.setBounds(434, 37, 24, 24);
 						jp1.add(lblNewLabel_6);
 						
-						lblNewLabel_7 = new JLabel(new ImageIcon("images/router.png"));
-						lblNewLabel_7.setBounds(275, 26, 24, 34);
+						lblNewLabel_7 = new JLabel(new ImageIcon("images/irouter.png"));
+						lblNewLabel_7.setBounds(275, 37, 24, 24);
 						jp1.add(lblNewLabel_7);
 						
-						JLabel lblNewLabel_8 = new JLabel(new ImageIcon("images/pe.png"));
-						lblNewLabel_8.setBounds(354, 26, 24, 34);
+						JLabel lblNewLabel_8 = new JLabel(new ImageIcon("images/ipe.png"));
+						lblNewLabel_8.setBounds(354, 37, 24, 24);
 						jp1.add(lblNewLabel_8);
+						
+						lblNewLabel_9 = new JLabel(new ImageIcon("images/config.png"));
+						lblNewLabel_9.setBounds(826, 0, 24, 24);
+						jp1.add(lblNewLabel_9);
+						
+						label_1 = new JLabel(new ImageIcon("images/configresult.png"));
+						label_1.setBounds(826, 245, 24, 24);
+						jp1.add(label_1);
+						
+						
+		
+						
+						
+			
+						
+							
+				
+						
+						
+						
+						
 						
 						
 						
@@ -827,15 +859,134 @@ public class CMpls extends JDialog {
 				
 				
 
-		//Panel 2 Routing Protocols	
-		JPanel jp2 = new JPanel(null);
+		jp2 = new JPanel(null);
 		ImageIcon icon2 = new ImageIcon("images/2.png") ;
 		tabbedPane.addTab("Monitoring Network",icon2,jp2,"segundo panel");
 		//coloco los botones cancelar y enviar en el tab monitoring Network			
-		botonesCancel_Enviar(jp2);
-				
-	
+		monitoringnetwork = new JScrollPane();
+		monitoringnetwork.setBounds(53, 37, 517, 337);
+		monitoringnetwork.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jp2.add(monitoringnetwork);
 		
+		configGenViewRoutingTable = new JTextArea();
+		monitoringnetwork.setViewportView(configGenViewRoutingTable);
+		configGenViewRoutingTable.setLineWrap(true);
+		configGenViewRoutingTable.setEditable(false);
+		
+		JLabel lblmonitoringroutingtable = new JLabel("Tabla de Ruteo  ");
+		lblmonitoringroutingtable.setBounds(53, 5, 314, 22);
+		jp2.add(lblmonitoringroutingtable);
+		
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_2.setBounds(631, 37, 713, 337);
+		jp2.add(scrollPane_2);
+		
+		configGenViewIPInterfaceBrief = new JTextArea();
+		scrollPane_2.setViewportView(configGenViewIPInterfaceBrief);
+		configGenViewIPInterfaceBrief.setLineWrap(true);
+		configGenViewIPInterfaceBrief.setEditable(false);
+		
+		JLabel label = new JLabel("Monitoring Interfaces  ");
+		label.setBounds(631, 5, 314, 22);
+		jp2.add(label);
+		ImageIcon refresh = new ImageIcon("images/refresh.png");
+		btnActualizarRoutingTable = new JButton("Actualizar", refresh);
+		btnActualizarRoutingTable.setBounds(435, 5, 135, 22);
+		jp2.add(btnActualizarRoutingTable);
+		
+		btnActualizarIPInterfacesBrief = new JButton("Actualizar", refresh);
+		btnActualizarIPInterfacesBrief.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setValoresConexion();
+				configGenViewIPInterfaceBrief.setText("");
+				MonitoringNetworkRefresh m2 = new MonitoringNetworkRefresh(c1);
+				m2.refreshIPInterfaceBrief(configGenViewIPInterfaceBrief);
+			}
+		});
+		btnActualizarIPInterfacesBrief.setBounds(1209, 5, 135, 22);
+		jp2.add(btnActualizarIPInterfacesBrief);
+		btnActualizarRoutingTable.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setValoresConexion();
+				configGenViewRoutingTable.setText("");
+				MonitoringNetworkRefresh m1 = new MonitoringNetworkRefresh(c1);
+				m1.refreshIPRoutingTable(configGenViewRoutingTable);
+				
+			}
+		});
+				
+		//Panel 3 Logs Configuraciones
+		JPanel jp3 = new JPanel(null);
+		ImageIcon icon3= new ImageIcon("images/slogs.png") ;
+		tabbedPane.addTab("Logs Configuraciones",icon3,jp3,"tercer panel");
+		//coloco los botones cancelar y enviar en el tab monitoring Network			
+		botonesCancel_Enviar(jp3);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(12, 25, 358, 25);
+		TableModel tablemodel = new TableModel() {
+			
+			@Override
+			public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void removeTableModelListener(TableModelListener l) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public int getRowCount() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public String getColumnName(int columnIndex) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public int getColumnCount() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void addTableModelListener(TableModelListener l) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		JTable jtable = new JTable();
+		jtable.setModel(tablemodel);
+		scrollPane_1.add(jtable);
+		jp3.add(scrollPane_1);
 		
 		
 //chequeos de los listeners para saber que se esta seleccionando al instanciar objeto CMpls
@@ -947,6 +1098,7 @@ this.checkActiveCheckMpls();
 			btnEnviar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					 saveCurrentConfig();
+					 Db4manager.storeCurrentconfigObjects(c1);
 				}
 
 
@@ -957,6 +1109,7 @@ this.checkActiveCheckMpls();
 			JButton btnNewButton_1 = new JButton("Cancelar");
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					dispose();
 				}
 			});
 			btnNewButton_1.setBounds(567, 629, 114, 23);
@@ -976,8 +1129,7 @@ this.checkActiveCheckMpls();
 //fin botones canel_enviar
 	
 		protected void saveCurrentConfig() {
-			// TODO nuevo metodo save current configuration
-			
+			setValoresConexion();
 			configResultView.setText("");//limpia el JTexArea cada vez que se apreta el boton ver parametros
 			c1.setCountestatic(countestatic);
 			c1.setCountdinamic(countDinamic);
@@ -1102,9 +1254,8 @@ try {
 			c1.setRutasDinamicas(temprutasdinamicas);
 			
 			c1.showparameter(configResultView);
-
-			configResultView.append("count dinamic" + c1.getCountdinamic());
-			configResultView.append("count estatic" + c1.getCountestatic());
+			c1.setDateEstamp(new Date());
+			configResultView.append(c1.getTelnetpassword());
 		}
 
 
@@ -1543,17 +1694,34 @@ public void checkcomboboxinterface(JComboBox<?> JComboBoxInterface,int index) {
 	}
 
 		
-	public void parametrosconex(String ipp, String puertop, String comunityp,String usuariop, char[] cs) {
+	public void parametrosconex(String ipp, String puertop, String comunityp,String usuariop, char[]  cs) {
 		// se setean las variable de conexion snmp
-		ip=ipp;
-		puerto=puertop;
-		comunity=comunityp;
-		usuario=usuariop;
+		this.ip=ipp;
+		this.puerto=puertop;
+		this.comunity=comunityp;
+		this.usuario=usuariop;
+		this.password = "";
 		for (int i = 0; i < cs.length; i++) {
-			password=password+cs[i];
+			
+			this.password=this.password+cs[i];
 		}
+
+		System.out.println("password"+this.password);
 		
-		
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	public void setValoresConexion() {
+		c1.setTelnetIP(ip);
+		c1.setTelnetPuerto(puerto);
+		c1.setTelnetComunity(comunity);
+		c1.setTelnetUsuario(usuario);
+		c1.setTelnetPassword(password);
 	}
 	}
 

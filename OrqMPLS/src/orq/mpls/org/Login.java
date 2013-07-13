@@ -62,7 +62,6 @@ public class Login extends JFrame {
 	 */
 	public Login() {
 		setTitle("Orquestador MPLS - Login");
-	
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

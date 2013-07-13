@@ -1,13 +1,15 @@
 package orq.mpls.org;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JTextArea;
 
 
 
-public class CurrentConfig {
 
+public class CurrentConfig {
+private Date dateEstamp;
 private int countestatic;
 private int countdinamic;
 private boolean ifCpe;
@@ -34,6 +36,11 @@ private String bgpNeighbor;
 private String bgpRemoteAs;
 private String bgpNeighborInternal;
 private String bgpRemoteAsInternal;
+private String telnetip;
+private Object telnetpuerto;
+private String telnetcomunity;
+private String telnetusuario;
+private String telnetpassword;
 
 
 public String[] getForwardingVRF() {
@@ -362,6 +369,48 @@ public String getBgpRemoteAsInternal() {
 public void setBgpRemoteAsInternal(String bgpRemoteAsInternal) {
 	this.bgpRemoteAsInternal = bgpRemoteAsInternal;
 }
+public void setTelnetIP(String ip) {
+	// TODO Auto-generated method stub
+	this.telnetip=ip;
+}
+public void setTelnetPuerto(String puerto) {
+	// TODO Auto-generated method stub
+	this.telnetpuerto=puerto;
+}
+public void setTelnetComunity(String comunity) {
+	// TODO Auto-generated method stub
+	this.telnetcomunity=comunity;
+}
+public void setTelnetUsuario(String usuario) {
+	// TODO Auto-generated method stub
+	this.telnetusuario=usuario;
+}
+public void setTelnetPassword(String password) {
+	// TODO Auto-generated method stub
+	this.telnetpassword=password;
+}
+public String getTelnetip() {
+	return telnetip;
+}
+public Object getTelnetpuerto() {
+	return telnetpuerto;
+}
+public String getTelnetcomunity() {
+	return telnetcomunity;
+}
+public String getTelnetusuario() {
+	return telnetusuario;
+}
+public String getTelnetpassword() {
+	return telnetpassword;
+}
+public Date getDateEstamp() {
+	return dateEstamp;
+}
+public void setDateEstamp(Date dateEstamp) {
+	this.dateEstamp = dateEstamp;
+}
+
 
 
 
