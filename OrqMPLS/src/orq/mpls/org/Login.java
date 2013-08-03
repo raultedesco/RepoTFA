@@ -8,7 +8,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
@@ -73,15 +76,47 @@ public class Login extends JFrame {
 		
 		JButton btnNewButton = new JButton("Conectar");
 		btnNewButton.addActionListener(new ActionListener() {
+			
+			private AutomatedTelnet testtelnet;
+
 			public void actionPerformed(ActionEvent e) {
+				//Antes de crear cmpls probamos que los valores pasados para telnet sean correctos
 				//nueva ventana jdialog
-				CMpls v1 = new CMpls();
-				v1.setVisible(true);
-				v1.parametrosconex(ip.getText(),puerto.getText(),comunitySnmp.getText(),usuario.getText(),password.getPassword());
-				//bloquea las demas ventanas, la setea como modal
-				v1.setModal(true);
-	
+				if (validarCampos()==false) {
+					JOptionPane.showMessageDialog(null,"Solo el Campo Comunidad puede estar vacio.. los demas campos son obligatorios!!!"
+							,"Error de Validacion",JOptionPane.INFORMATION_MESSAGE,(new ImageIcon("images/config.png")));
+				}
 				
+				if (validarCampos()) {
+									boolean flag = false;
+
+					String pass = new String(password.getPassword());
+					testtelnet = new AutomatedTelnet();
+					
+					try {
+						flag=testtelnet.TestConeccion(ip.getText(), usuario.getText(), pass);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					if (flag==true) {
+						CMpls v1 = new CMpls();
+						v1.setVisible(true);
+						v1.parametrosconex(ip.getText(), puerto.getText(),
+								comunitySnmp.getText(), usuario.getText(),
+								password.getPassword());
+						v1.connectSnmp();
+						//bloquea las demas ventanas, la setea como modal
+						v1.setModal(true);
+					
+					
+					
+				}
+					if(flag==false) {
+						JOptionPane.showMessageDialog(null,	"Usuario o Password Incorrecto");
+					}
+				}
 				
 				
 				
@@ -102,6 +137,7 @@ public class Login extends JFrame {
 		ip.setBounds(109, 59, 220, 21);
 		contentPane.add(ip);
 		ip.setColumns(10);
+		ip.setText("192.168.80.110");
 		
 		JLabel lblPuerto = new JLabel("Puerto");
 		lblPuerto.setBounds(337, 61, 70, 15);
@@ -122,6 +158,7 @@ public class Login extends JFrame {
 		comunitySnmp.setBounds(152, 152, 177, 21);
 		contentPane.add(comunitySnmp);
 		comunitySnmp.setColumns(10);
+		comunitySnmp.setText("mpls-rw");
 		
 		JLabel lbluser = new JLabel("Usuario");
 		lbluser.setBounds(12, 88, 70, 15);
@@ -131,6 +168,7 @@ public class Login extends JFrame {
 		usuario.setBounds(109, 86, 220, 21);
 		contentPane.add(usuario);
 		usuario.setColumns(10);
+		usuario.setText("raul");
 		
 		JLabel lblpassword = new JLabel("Password");
 		lblpassword.setBackground(UIManager.getColor("Button.background"));
@@ -188,4 +226,22 @@ public class Login extends JFrame {
 	public void setPassword(JPasswordField password) {
 		this.password = password;
 	}
+
+	public boolean validarCampos() {
+		
+		if (this.ip.getText().isEmpty()) {
+			
+			return false;
+		}
+		if (this.usuario.getText().isEmpty()) {
+		
+			return false;
+		}
+		if (this.password.getText().isEmpty()) {
+			
+			return false;
+		}
+		return true;
+	}
+
 }

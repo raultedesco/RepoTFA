@@ -1,5 +1,6 @@
 package orq.mpls.org;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 public class SendCurrentConfig {
@@ -19,6 +20,7 @@ public class SendCurrentConfig {
 			configBGP_EIGRP_Static_Dinamic_Routes(configGenView);
 			configInterfaces(configGenView);
 			configGenView.append(send.backroot());
+			JOptionPane.showMessageDialog(null,	"Configuracion Enviada...");
 			
 		}
 	} catch (Exception e) {
@@ -33,6 +35,7 @@ public class SendCurrentConfig {
 			configBGP_EIGRP_Static_Dinamic_Routes(configGenView);
 			configInterfaces(configGenView);
 			configGenView.append(send.backroot());
+			JOptionPane.showMessageDialog(null,	"Configuracion Enviada...");
 		}
 		
 		
@@ -52,6 +55,7 @@ public class SendCurrentConfig {
 			configGenView.append(send.cvrf(c1));
 			configGenView.append(send.cbgpMPLS(c1));
 			configGenView.append(send.backroot());
+			JOptionPane.showMessageDialog(null,	"Configuracion Enviada...");
 		}
 		
 	} catch (Exception e) {

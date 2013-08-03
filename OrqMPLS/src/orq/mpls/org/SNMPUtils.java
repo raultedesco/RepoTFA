@@ -19,7 +19,8 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 public class SNMPUtils
 {
-  private static String  ipAddress  = "192.168.80.110";
+
+private  String  ipAddress;
 
   private static String  port    = "161";
 
@@ -28,15 +29,24 @@ public class SNMPUtils
 
   private static int    snmpVersion  = SnmpConstants.version2c;
 
-  private static String  community  = "mpls-rw";
+  private String  community;
+  
 
-  public static String getIpAddress() {
+
+
+  public SNMPUtils(String ip, String comunity) {
+	this.ipAddress = ip;
+	this.community=comunity;
+}
+
+
+public  String getIpAddress() {
 	return ipAddress;
 }
 
 
-public static void setIpAddress(String ipAddress) {
-	SNMPUtils.ipAddress = ipAddress;
+public  void setIpAddress(String ipAddress) {
+	this.ipAddress = ipAddress;
 }
 
 
@@ -70,18 +80,18 @@ public static void setSnmpVersion(int snmpVersion) {
 }
 
 
-public static String getCommunity() {
+public  String getCommunity() {
 	return community;
 }
 
 
-public static void setCommunity(String community) {
-	SNMPUtils.community = community;
+public  void setCommunity(String community) {
+	this.community = community;
 }
 
 
 public static void main(String[] args) throws Exception {
-  printInterface();	
+  
 		
 
 		
@@ -91,19 +101,19 @@ public static void main(String[] args) throws Exception {
   }
 
 
-public static ArrayList<String> printInterface() throws IOException {
+public  ArrayList<String> printInterface() throws IOException {
 	ArrayList<String> interfaces = new ArrayList<>();
-	SNMPUtils obj1 = new SNMPUtils();
+	SNMPUtils obj1 = new  SNMPUtils(this.ipAddress,this.community);
 	String print=null;
 	  
-	  	System.out.println("Interface: " +  obj1.getnext(obj1.getOidValue()));
+	  	//System.out.println("Interface: " +  obj1.getnext(obj1.getOidValue()));
 	  	interfaces.add(obj1.getnext(obj1.getOidValue()));
 		while (!"Null0".equals(print)) {
 			
 			print = obj1.getnext(obj1.nextoid(obj1.getOidValue()));
 			obj1.setOidValue(obj1.nextoid(obj1.getOidValue()));
 			if (!"Null0".equals(print)) {
-				System.out.println("Interface: " + print);
+				//System.out.println("Interface: " + print);
 				interfaces.add(print);
 				
 				

@@ -59,7 +59,7 @@ public class SnmpManager {
 		  } catch(Exception e) {
 		     e.printStackTrace();
 		  }
-		System.out.println("Response="+strResponse);
+		 System.out.println("Response="+strResponse);
 		 return strResponse;
 		}
 	
@@ -98,18 +98,7 @@ public class SnmpManager {
 		    e.printStackTrace();
 		  }
 		}
-/*public String getinfo (String ip,String comunidad,  String oid) {
-	SnmpTest client = new SnmpTest();
-	String result;
-	client.snmpGet(ip, comunidad, client.getoid(oid));
-	return result;
-}
-	
-public String getoid(String oid	){
-	
-	
-	return oid;
-}*/
+
 
 
 	

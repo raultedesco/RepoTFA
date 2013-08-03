@@ -15,6 +15,7 @@ private int countdinamic;
 private boolean ifCpe;
 private boolean ifPe;
 private boolean ifP;
+private String DeviceType;
 private boolean bgpFlag;
 private boolean eigrpFlag;
 private boolean cefFlag;
@@ -37,12 +38,24 @@ private String bgpRemoteAs;
 private String bgpNeighborInternal;
 private String bgpRemoteAsInternal;
 private String telnetip;
-private Object telnetpuerto;
+private String telnetpuerto;
 private String telnetcomunity;
 private String telnetusuario;
 private String telnetpassword;
 
 
+
+public void SetDeviceType() {
+if (ifCpe) {
+	this.DeviceType="CPE";
+}
+if (ifPe) {
+	this.DeviceType="PE";
+}
+if (ifP) {
+	this.DeviceType="P";
+}
+}
 public String[] getForwardingVRF() {
 	return forwardingVRF;
 }
@@ -409,6 +422,15 @@ public Date getDateEstamp() {
 }
 public void setDateEstamp(Date dateEstamp) {
 	this.dateEstamp = dateEstamp;
+}
+@Override
+public String toString() {
+	
+	// TODO Auto-generated method stub
+	return "Tipo de Dispositivo: "+ DeviceType+" [ " +this.getDateEstamp() + " ] ";
+}
+public String getDeviceType() {
+	return DeviceType;
 }
 
 
