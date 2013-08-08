@@ -40,7 +40,7 @@ public class CMpls extends JDialog {
 	/**
 	 * 
 	 */
-
+	// Comentario realizado 08-08-2013
 	private String ip;
 	private String puerto;
 	private String comunity;
