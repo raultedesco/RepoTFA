@@ -178,7 +178,8 @@ public class CMpls extends JDialog {
 		JLabel jl1 = new JLabel("MPLS");
 		jl1.setBounds(10, 0, 123, 35);
 		jp1.add(jl1);
-		ImageIcon icon = new ImageIcon("images/1.png");
+		ImageIcon icon = new ImageIcon(this.getClass().getResource(
+				"images/1.png"));
 		tabbedPane.addTab("MPLS", icon, jp1, "primer panel");
 
 		checkboxActiveCEF = new JCheckBox("Active CEF");
@@ -671,7 +672,8 @@ public class CMpls extends JDialog {
 		labelMaskDinamic.setBounds(589, 444, 70, 15);
 		jp1.add(labelMaskDinamic);
 
-		ImageIcon plus = new ImageIcon("images/3.png");
+		ImageIcon plus = new ImageIcon(this.getClass().getResource(
+				"images/3.png"));
 		buttonAddRutas_Mask = new JButton(plus);
 		// agrego el boton + al panel
 		buttonAddRutas_Mask.setBounds(345, 440, 44, 22);
@@ -783,24 +785,28 @@ public class CMpls extends JDialog {
 		jtextNeighborIPInternal.setColumns(10);
 		jtextNeighborIPInternal.setBounds(511, 188, 114, 22);
 		jp1.add(jtextNeighborIPInternal);
-		JLabel iconP = new JLabel(new ImageIcon("images/ip.png"));
+		JLabel iconP = new JLabel(new ImageIcon(this.getClass().getResource(
+				"images/ip.png")));
 		iconP.setBounds(434, 37, 24, 24);
 		jp1.add(iconP);
 
-		iconCPE = new JLabel(new ImageIcon("images/irouter.png"));
+		iconCPE = new JLabel(new ImageIcon(this.getClass().getResource(
+				"images/irouter.png")));
 		iconCPE.setBounds(275, 37, 24, 24);
 		jp1.add(iconCPE);
 
-		JLabel iconPE = new JLabel(new ImageIcon("images/ipe.png"));
+		JLabel iconPE = new JLabel(new ImageIcon(this.getClass().getResource(
+				"images/ipe.png")));
 		iconPE.setBounds(354, 37, 24, 24);
 		jp1.add(iconPE);
 
-		iconParamConfig = new JLabel(new ImageIcon("images/config.png"));
+		iconParamConfig = new JLabel(new ImageIcon(this.getClass().getResource(
+				"images/config.png")));
 		iconParamConfig.setBounds(826, 0, 24, 24);
 		jp1.add(iconParamConfig);
 
-		IconResultAppConfig = new JLabel(new ImageIcon(
-				"images/configresult.png"));
+		IconResultAppConfig = new JLabel(new ImageIcon(this.getClass()
+				.getResource("images/configresult.png")));
 		IconResultAppConfig.setBounds(826, 245, 24, 24);
 		jp1.add(IconResultAppConfig);
 
@@ -825,7 +831,8 @@ public class CMpls extends JDialog {
 		jp1.add(labelHabilitarLineInterfaces);
 
 		jp2 = new JPanel(null);
-		ImageIcon icon2 = new ImageIcon("images/2.png");
+		ImageIcon icon2 = new ImageIcon(this.getClass().getResource(
+				"images/2.png"));
 		tabbedPane.addTab("Monitoring Network", icon2, jp2, "segundo panel");
 		// coloco los botones cancelar y enviar en el tab monitoring Network
 		monitoringnetwork = new JScrollPane();
@@ -857,7 +864,8 @@ public class CMpls extends JDialog {
 		JLabel label = new JLabel("Monitoring Interfaces  ");
 		label.setBounds(631, 5, 314, 22);
 		jp2.add(label);
-		ImageIcon refresh = new ImageIcon("images/refresh.png");
+		ImageIcon refresh = new ImageIcon(this.getClass().getResource(
+				"images/refresh.png"));
 		btnActualizarRoutingTable = new JButton("Actualizar", refresh);
 		btnActualizarRoutingTable.setBounds(435, 5, 135, 24);
 		jp2.add(btnActualizarRoutingTable);
@@ -887,7 +895,8 @@ public class CMpls extends JDialog {
 
 		// Panel 3 Logs Configuraciones
 		JPanel jp3 = new JPanel(null);
-		ImageIcon icon3 = new ImageIcon("images/slogs.png");
+		ImageIcon icon3 = new ImageIcon(this.getClass().getResource(
+				"images/slogs.png"));
 		tabbedPane.addTab("Logs Configuraciones", icon3, jp3, "tercer panel");
 		// coloco los botones cancelar y enviar en el tab monitoring Network
 		// botonesCancel_Enviar(jp3);
@@ -907,13 +916,14 @@ public class CMpls extends JDialog {
 		configResultViewlogs = new JTextArea();
 		scrollPane_3.setViewportView(configResultViewlogs);
 
-		JButton btnNewButton_2 = new JButton("Mostrar", new ImageIcon(
-				"images/logs.png"));
+		JButton btnNewButton_2 = new JButton("Mostrar", new ImageIcon(this
+				.getClass().getResource("images/logs.png")));
 		btnNewButton_2.setBounds(452, 12, 100, 24);
 		jp3.add(btnNewButton_2);
 
 		JLabel lblNewLabel_10 = new JLabel("Configuracion");
-		lblNewLabel_10.setIcon(new ImageIcon("images/log.png"));
+		lblNewLabel_10.setIcon(new ImageIcon(this.getClass().getResource(
+				"images/log.png")));
 		lblNewLabel_10.setBounds(12, 150, 150, 17);
 		jp3.add(lblNewLabel_10);
 		btnNewButton_2.addActionListener(new ActionListener() {
