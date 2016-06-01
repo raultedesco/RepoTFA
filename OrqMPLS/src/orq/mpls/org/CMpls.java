@@ -41,6 +41,7 @@ public class CMpls extends JDialog {
 	 * 
 	 */
 	// Comentario realizado 08-08-2013
+	//Variables definidas para el Login
 	private String ip;
 	private String puerto;
 	private String comunity;
